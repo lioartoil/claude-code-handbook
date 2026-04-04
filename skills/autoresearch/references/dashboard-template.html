@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="30">
+  <title>Autoresearch Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 24px; }
+    h1 { color: #58a6ff; margin-bottom: 8px; font-size: 24px; }
+    .meta { color: #8b949e; font-size: 14px; margin-bottom: 24px; }
+    .meta a { color: #58a6ff; text-decoration: none; }
+
+    .score-card { display: flex; gap: 16px; margin-bottom: 24px; }
+    .score-box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 24px; text-align: center; }
+    .score-box .label { font-size: 12px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }
+    .score-box .value { font-size: 36px; font-weight: 700; margin-top: 4px; }
+    .score-box .value.green { color: #3fb950; }
+    .score-box .value.yellow { color: #d29922; }
+    .score-box .value.red { color: #f85149; }
+
+    table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    th { background: #161b22; color: #8b949e; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; padding: 8px 12px; text-align: left; border-bottom: 1px solid #30363d; }
+    td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 14px; }
+    tr:hover { background: #161b22; }
+
+    .pass { color: #3fb950; font-weight: 600; }
+    .fail { color: #f85149; font-weight: 600; }
+    .kept { color: #3fb950; }
+    .reverted { color: #d29922; }
+    .running { color: #58a6ff; }
+
+    .status-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .status-badge.complete { background: #238636; color: #fff; }
+    .status-badge.running { background: #1f6feb; color: #fff; }
+    .status-badge.pending { background: #30363d; color: #8b949e; }
+
+    .changelog { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+    .changelog h3 { color: #58a6ff; margin-bottom: 12px; font-size: 16px; }
+    .changelog-entry { padding: 8px 0; border-bottom: 1px solid #21262d; }
+    .changelog-entry:last-child { border-bottom: none; }
+    .changelog-entry .iter { font-weight: 600; color: #c9d1d9; }
+    .changelog-entry .detail { color: #8b949e; font-size: 13px; margin-top: 4px; }
+
+    .footer { color: #484f58; font-size: 12px; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <h1>Autoresearch Dashboard</h1>
+  <div class="meta">
+    <a href="{{PR_URL}}">{{PR_URL}}</a> &middot;
+    Iterations: {{ITERATIONS}} &middot;
+    Started: {{STARTED_AT}} &middot;
+    <span class="status-badge {{STATUS_CLASS}}">{{STATUS}}</span>
+  </div>
+
+  <!-- Score Cards -->
+  <div class="score-card">
+    <div class="score-box">
+      <div class="label">Baseline</div>
+      <div class="value {{BASELINE_COLOR}}">{{BASELINE_SCORE}}/6</div>
+    </div>
+    <div class="score-box">
+      <div class="label">Current</div>
+      <div class="value {{CURRENT_COLOR}}">{{CURRENT_SCORE}}/6</div>
+    </div>
+    <div class="score-box">
+      <div class="label">Changes Kept</div>
+      <div class="value green">{{CHANGES_KEPT}}</div>
+    </div>
+    <div class="score-box">
+      <div class="label">Reverted</div>
+      <div class="value yellow">{{CHANGES_REVERTED}}</div>
+    </div>
+  </div>
+
+  <!-- Checklist Grid -->
+  <table>
+    <thead>
+      <tr>
+        <th>Checklist Item</th>
+        <th>Baseline</th>
+        {{ITERATION_HEADERS}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1. No duplicate findings</td>
+        <td class="{{BASELINE_1_CLASS}}">{{BASELINE_1}}</td>
+        {{ITERATION_1_CELLS}}
+      </tr>
+      <tr>
+        <td>2. Suggested fix in every comment</td>
+        <td class="{{BASELINE_2_CLASS}}">{{BASELINE_2}}</td>
+        {{ITERATION_2_CELLS}}
+      </tr>
+      <tr>
+        <td>3. Only diff-introduced issues</td>
+        <td class="{{BASELINE_3_CLASS}}">{{BASELINE_3}}</td>
+        {{ITERATION_3_CELLS}}
+      </tr>
+      <tr>
+        <td>4. No upstream-guarded FPs</td>
+        <td class="{{BASELINE_4_CLASS}}">{{BASELINE_4}}</td>
+        {{ITERATION_4_CELLS}}
+      </tr>
+      <tr>
+        <td>5. Summary under char limit</td>
+        <td class="{{BASELINE_5_CLASS}}">{{BASELINE_5}}</td>
+        {{ITERATION_5_CELLS}}
+      </tr>
+      <tr>
+        <td>6. Correct verdict</td>
+        <td class="{{BASELINE_6_CLASS}}">{{BASELINE_6}}</td>
+        {{ITERATION_6_CELLS}}
+      </tr>
+      <tr>
+        <th>Total Score</th>
+        <th>{{BASELINE_SCORE}}/6</th>
+        {{ITERATION_TOTAL_CELLS}}
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Changelog -->
+  <div class="changelog">
+    <h3>Change Log</h3>
+    {{CHANGELOG_ENTRIES}}
+  </div>
+
+  <div class="footer">
+    Auto-refreshes every 30 seconds &middot; Powered by Karpathy's autoresearch method
+  </div>
+</body>
+</html>
