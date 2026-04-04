@@ -9,6 +9,7 @@ Analyze user story subtasks and suggest consolidation opportunities for more eff
 ```
 
 Or if in a user story directory:
+
 ```
 /optimize-subtasks
 ```
@@ -68,6 +69,7 @@ Or if in a user story directory:
 # Task Optimization Analysis
 
 ## Current Structure
+
 - 5 subtasks across 3 developers
 - 4 handoff points
 - Sequential dependencies
@@ -75,19 +77,23 @@ Or if in a user story directory:
 ## Optimization Recommendations
 
 ### Merge Tasks A & B
+
 **Rationale**: Both modify same service layer
 **Efficiency Gain**: -0.5 days, -1 handoff
 **New Scope**: Combined implementation with integrated testing
 
-### Keep Task C Separate  
+### Keep Task C Separate
+
 **Rationale**: Different technology stack, can parallelize
 
 ## Optimized Breakdown
+
 1. Backend Implementation (includes API + DB) - 2.5 pts
 2. Frontend Implementation (includes UI + tests) - 2 pts
 3. Infrastructure Setup - 1 pt
 
 ## Metrics
+
 - Time Saved: 20% (1 day)
 - Handoffs Reduced: 75% (from 4 to 1)
 - Parallel Paths: 2 (was 1)
@@ -108,7 +114,7 @@ The command defaults to **Option B: Moderate Consolidation** which balances:
 
 1. **API Contracts First**: Keep proto/OpenAPI definitions separate for clear interfaces
 2. **Same-Layer Consolidation**: Merge implementation tasks within same layer
-3. **Trivial Task Merging**: Combine pass-through tasks (e.g., BFF) with main implementation  
+3. **Trivial Task Merging**: Combine pass-through tasks (e.g., BFF) with main implementation
 4. **Developer-Owned Testing**: Include tests in implementation tasks, not separate
 5. **Enable Parallelism**: Structure to allow frontend/backend parallel development
 6. **Pragmatic PR Sizes**: Not too many small PRs, not unwieldy large ones
@@ -116,7 +122,7 @@ The command defaults to **Option B: Moderate Consolidation** which balances:
 ## Anti-Patterns to Flag
 
 - Separate "testing" tasks (integrate instead)
-- Artificial layer separation for small features  
+- Artificial layer separation for small features
 - Sequential tasks that could be parallel
 - Multiple config tasks (consolidate)
 - Handoffs for trivial changes

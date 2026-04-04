@@ -117,6 +117,7 @@ fi
 ```
 
 After repo-to-live, ask if the user wants to:
+
 1. Run `setup-knowledge-base.sh` to create knowledge-base symlinks
 2. Run `npm install -g mcp-local-rag` if not already installed
 

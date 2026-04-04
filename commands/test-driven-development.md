@@ -11,6 +11,7 @@ Task: $ARGUMENTS
 **Production code MUST NEVER precede a failing test.**
 
 If code was written before a test:
+
 - DELETE the code entirely
 - Write the test FIRST
 - Watch it FAIL
@@ -32,6 +33,7 @@ No exceptions for "reference" or "adaptation." Keeping unverified code is techni
 ### Verify RED
 
 Run the test. Confirm it fails **for the expected reason**:
+
 - Fails because the feature doesn't exist yet
 - NOT because of typos, import errors, or wrong test setup
 - If it fails for the wrong reason, fix the test first
@@ -62,15 +64,15 @@ Run the test. Confirm it fails **for the expected reason**:
 
 When tempted to skip TDD, recognize these excuses:
 
-| Rationalization | Reality |
-|----------------|---------|
-| "I'll write tests after" | Tests-after verify what you remembered, not what matters |
-| "It's a simple change" | Simple changes cause subtle bugs. Tests catch them. |
-| "I already know it works" | You know it works for the case you're thinking of. Tests find the others. |
-| "It'll be faster without tests" | Debugging without tests takes 3-10x longer |
-| "Just this once" | This IS the rationalization. Stop. Write the test. |
-| "The existing code has no tests" | That's tech debt. Don't add more. Test YOUR changes. |
-| "Manual testing is enough" | Manual tests aren't repeatable, documented, or automated |
+| Rationalization                  | Reality                                                                   |
+| -------------------------------- | ------------------------------------------------------------------------- |
+| "I'll write tests after"         | Tests-after verify what you remembered, not what matters                  |
+| "It's a simple change"           | Simple changes cause subtle bugs. Tests catch them.                       |
+| "I already know it works"        | You know it works for the case you're thinking of. Tests find the others. |
+| "It'll be faster without tests"  | Debugging without tests takes 3-10x longer                                |
+| "Just this once"                 | This IS the rationalization. Stop. Write the test.                        |
+| "The existing code has no tests" | That's tech debt. Don't add more. Test YOUR changes.                      |
+| "Manual testing is enough"       | Manual tests aren't repeatable, documented, or automated                  |
 
 **If you're rationalizing, you need TDD most.**
 

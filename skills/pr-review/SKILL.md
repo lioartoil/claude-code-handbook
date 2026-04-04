@@ -19,15 +19,19 @@ You are a senior code reviewer conducting a thorough review in an isolated conte
 ## Dynamic PR Data
 
 ### PR Metadata
+
 !`gh pr view --json number,title,author,baseRefName,headRefName,additions,deletions,changedFiles 2>/dev/null || echo "Run: gh pr checkout <number> first"`
 
 ### PR Diff (Changes to Review)
+
 !`gh pr diff --patch 2>/dev/null | head -500 || echo "No diff available"`
 
 ### Changed Files
+
 !`gh pr diff --name-only 2>/dev/null || echo "No files available"`
 
 ### Recent Commits on Branch
+
 !`git log --oneline -10 2>/dev/null || echo "No git history"`
 
 ## Review Criteria
@@ -66,14 +70,15 @@ Before evaluating each criterion:
 
 ### Findings
 
-| Severity | File:Line | Issue | Suggestion |
-|----------|-----------|-------|------------|
-| BLOCKER | path:123 | [Description] | [Fix] |
-| MAJOR | path:456 | [Description] | [Fix] |
-| MINOR | path:789 | [Description] | [Fix] |
-| SUGGESTION | path:012 | [Description] | [Improvement] |
+| Severity   | File:Line | Issue         | Suggestion    |
+| ---------- | --------- | ------------- | ------------- |
+| BLOCKER    | path:123  | [Description] | [Fix]         |
+| MAJOR      | path:456  | [Description] | [Fix]         |
+| MINOR      | path:789  | [Description] | [Fix]         |
+| SUGGESTION | path:012  | [Description] | [Improvement] |
 
 **Severity Guide:**
+
 - **BLOCKER**: Must fix before merge (security, correctness, breaking)
 - **MAJOR**: Should fix (performance, maintainability concerns)
 - **MINOR**: Nice to fix (style, minor improvements)
@@ -81,8 +86,8 @@ Before evaluating each criterion:
 
 ### Files Reviewed
 
-| File | Status | Notes |
-|------|--------|-------|
+| File   | Status      | Notes        |
+| ------ | ----------- | ------------ |
 | [path] | OK / ISSUES | [Brief note] |
 
 ### Verdict
@@ -94,6 +99,7 @@ Before evaluating each criterion:
 ### Pre-Submission Check
 
 Before finalizing your review:
+
 - [ ] Every changed file appears in the "Files Reviewed" table
 - [ ] Every BLOCKER has a concrete fix suggestion (not just "this is wrong")
 - [ ] Severity matches production impact, not theoretical risk
@@ -116,13 +122,13 @@ gh api repos/{owner}/{repo}/pulls/{pr_number}/comments \
 
 ## Error Handling
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| "No diff available" | PR not checked out or wrong branch | Run `gh pr checkout <number>` first |
-| "Run: gh pr checkout" | Not in correct repo directory | `cd` to the repo, then retry |
-| gh auth error | Token expired or missing scopes | Run `gh auth login` and ensure `repo` scope |
-| Diff >10K lines | PR too large for single review | Flag for split; review changed files list first, focus on high-risk files |
-| "No git history" | Shallow clone or detached HEAD | Run `git fetch --unshallow` or `gh pr checkout` |
+| Error                 | Cause                              | Solution                                                                  |
+| --------------------- | ---------------------------------- | ------------------------------------------------------------------------- |
+| "No diff available"   | PR not checked out or wrong branch | Run `gh pr checkout <number>` first                                       |
+| "Run: gh pr checkout" | Not in correct repo directory      | `cd` to the repo, then retry                                              |
+| gh auth error         | Token expired or missing scopes    | Run `gh auth login` and ensure `repo` scope                               |
+| Diff >10K lines       | PR too large for single review     | Flag for split; review changed files list first, focus on high-risk files |
+| "No git history"      | Shallow clone or detached HEAD     | Run `git fetch --unshallow` or `gh pr checkout`                           |
 
 If any dynamic command (lines starting with `!`) fails, continue the review with available data. Note missing context in the Summary section.
 

@@ -40,16 +40,19 @@ Sync JIRA tickets to local documentation structure.
 ### 2. Fetch JIRA Data
 
 For single ticket:
+
 ```bash
 jira view <ticket-id> -t debug
 ```
 
 For sprint search:
+
 ```bash
 jira list --query 'project = <project> AND sprint = "<project> Sprint <number>"'
 ```
 
 For JQL search:
+
 ```bash
 jira list --query '<custom-jql>'
 ```
@@ -57,6 +60,7 @@ jira list --query '<custom-jql>'
 ### 3. Extract Key Information
 
 From debug output, extract:
+
 - **Core fields**: summary, description, status, priority, issuetype
 - **Dates**: created, updated, duedate
 - **People**: reporter, assignee
@@ -129,7 +133,8 @@ From debug output, extract:
 ### 7. Smart Updates
 
 If files exist:
-- Preserve sections marked with `<!-- CUSTOM -->` 
+
+- Preserve sections marked with `<!-- CUSTOM -->`
 - Update JIRA-sourced sections
 - Add new fields if found
 - Note last sync timestamp
@@ -146,6 +151,7 @@ Synced: PROJ-794 ✓
 ## Configuration Detection
 
 Check for project-specific patterns:
+
 - `.jira-sync.json` for field mappings
 - Existing directory structures
 - Project type indicators (user-stories/, docs/, etc.)
@@ -162,6 +168,7 @@ Check for project-specific patterns:
 ### Custom Field Mapping
 
 If `.jira-sync.json` exists:
+
 ```json
 {
   "fieldMappings": {
@@ -184,6 +191,7 @@ If `.jira-sync.json` exists:
 ### Auto-categorization
 
 Based on:
+
 - Issue type (Story, Bug, Task)
 - Labels (frontend, backend, etc.)
 - Component (UI, API, etc.)

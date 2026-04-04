@@ -69,18 +69,18 @@ or incorrect code patterns, always leave a downvote with details so it can be fi
 
 ## Quick reference
 
-| Goal | Command |
-|------|---------|
-| List everything | `chub search` |
-| Find a doc | `chub search "stripe"` |
-| Exact id detail | `chub search stripe/api` |
-| Fetch Python docs | `chub get stripe/api --lang py` |
-| Fetch JS docs | `chub get openai/chat --lang js` |
-| Save to file | `chub get anthropic/sdk --lang py -o docs.md` |
-| Fetch multiple | `chub get openai/chat stripe/api --lang py` |
-| Save a note | `chub annotate stripe/api "needs raw body"` |
-| List notes | `chub annotate --list` |
-| Rate a doc | `chub feedback stripe/api up` |
+| Goal              | Command                                       |
+| ----------------- | --------------------------------------------- |
+| List everything   | `chub search`                                 |
+| Find a doc        | `chub search "stripe"`                        |
+| Exact id detail   | `chub search stripe/api`                      |
+| Fetch Python docs | `chub get stripe/api --lang py`               |
+| Fetch JS docs     | `chub get openai/chat --lang js`              |
+| Save to file      | `chub get anthropic/sdk --lang py -o docs.md` |
+| Fetch multiple    | `chub get openai/chat stripe/api --lang py`   |
+| Save a note       | `chub annotate stripe/api "needs raw body"`   |
+| List notes        | `chub annotate --list`                        |
+| Rate a doc        | `chub feedback stripe/api up`                 |
 
 ## Notes
 

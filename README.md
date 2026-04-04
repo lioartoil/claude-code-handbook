@@ -50,54 +50,54 @@ Slash commands are workflows you invoke with `/command-name`. See [`commands/REA
 
 ### Highlights
 
-| Command | What it does |
-|---------|-------------|
-| `/review-and-comment` | Full PR review with inline GitHub comments |
-| `/systematic-debugging` | Structured debugging with phases (observe → hypothesize → test) |
-| `/test-driven-development` | TDD workflow with anti-rationalization guide |
-| `/root-cause-tracing` | Trace bugs backward through call chain |
-| `/owasp-security` | OWASP Top 10:2025 security review |
-| `/orchestrate-review` | Multi-agent parallel PR review for large/risky PRs |
-| `/session-handoff` | Preserve session context for next conversation |
-| `/shape-problem` | Transform ambiguous requirements into structured definitions |
+| Command                    | What it does                                                    |
+| -------------------------- | --------------------------------------------------------------- |
+| `/review-and-comment`      | Full PR review with inline GitHub comments                      |
+| `/systematic-debugging`    | Structured debugging with phases (observe → hypothesize → test) |
+| `/test-driven-development` | TDD workflow with anti-rationalization guide                    |
+| `/root-cause-tracing`      | Trace bugs backward through call chain                          |
+| `/owasp-security`          | OWASP Top 10:2025 security review                               |
+| `/orchestrate-review`      | Multi-agent parallel PR review for large/risky PRs              |
+| `/session-handoff`         | Preserve session context for next conversation                  |
+| `/shape-problem`           | Transform ambiguous requirements into structured definitions    |
 
 ## Skills
 
 Skills are auto-activated by Claude when relevant context is detected. They're more powerful than commands because they include reference materials and scoring criteria.
 
-| Skill | Purpose |
-|-------|---------|
-| `owasp-security` | Security review with secure code patterns and agentic AI risks |
-| `pr-review` | Comprehensive code review with criteria and comment templates |
-| `pr-followup` | Follow up on PR review comment responses |
-| `autoresearch` | Hill-climbing optimizer for headless review prompts |
-| `implement` | Single-shot ticket-to-PR implementation (TDD, pattern scan, self-review) |
-| `get-api-docs` | Fetch API docs before writing integration code |
-| `verify-pr` | Full PR verification checklist (build, test, push) |
+| Skill            | Purpose                                                                  |
+| ---------------- | ------------------------------------------------------------------------ |
+| `owasp-security` | Security review with secure code patterns and agentic AI risks           |
+| `pr-review`      | Comprehensive code review with criteria and comment templates            |
+| `pr-followup`    | Follow up on PR review comment responses                                 |
+| `autoresearch`   | Hill-climbing optimizer for headless review prompts                      |
+| `implement`      | Single-shot ticket-to-PR implementation (TDD, pattern scan, self-review) |
+| `get-api-docs`   | Fetch API docs before writing integration code                           |
+| `verify-pr`      | Full PR verification checklist (build, test, push)                       |
 
 ## Rules
 
 Rules are auto-loaded instructions that apply to every session. These are my non-negotiable constraints.
 
-| Rule | What it enforces |
-|------|-----------------|
-| `scope-management.md` | PR size limits (200-500 lines target), scope creep prevention |
-| `plan-mode.md` | Mandatory plan-before-execute workflow |
-| `convention-defaults.md` | Go/TypeScript naming and structure conventions |
-| `code-quality.md` | cSpell configuration scoping, quality standards |
-| `api-docs.md` | Always check current docs before writing API code |
-| `security.md` | Never access macOS Keychain (3-layer block) |
+| Rule                     | What it enforces                                              |
+| ------------------------ | ------------------------------------------------------------- |
+| `scope-management.md`    | PR size limits (200-500 lines target), scope creep prevention |
+| `plan-mode.md`           | Mandatory plan-before-execute workflow                        |
+| `convention-defaults.md` | Go/TypeScript naming and structure conventions                |
+| `code-quality.md`        | cSpell configuration scoping, quality standards               |
+| `api-docs.md`            | Always check current docs before writing API code             |
+| `security.md`            | Never access macOS Keychain (3-layer block)                   |
 
 ## Hooks
 
 Hooks run before/after Claude Code tool calls. They add guardrails and automation.
 
-| Hook | Trigger | Purpose |
-|------|---------|---------|
-| `block-keychain.sh` | PreToolUse:Bash | Blocks `security` keychain commands |
-| `dedup-hook.mjs` | PreToolUse:Write | Detects duplicate code before file writes |
-| `typecheck-hook.sh` | PostToolUse:Edit | TypeScript type checking after edits |
-| `setup-keychain-block.sh` | Manual | One-time setup for the keychain block |
+| Hook                      | Trigger          | Purpose                                   |
+| ------------------------- | ---------------- | ----------------------------------------- |
+| `block-keychain.sh`       | PreToolUse:Bash  | Blocks `security` keychain commands       |
+| `dedup-hook.mjs`          | PreToolUse:Write | Detects duplicate code before file writes |
+| `typecheck-hook.sh`       | PostToolUse:Edit | TypeScript type checking after edits      |
+| `setup-keychain-block.sh` | Manual           | One-time setup for the keychain block     |
 
 ## Templates
 
@@ -109,13 +109,13 @@ CLAUDE.md templates for bootstrapping new projects:
 
 Most files use placeholder values you should replace:
 
-| Placeholder | Replace with |
-|-------------|-------------|
-| `your-org` | Your GitHub org name |
-| `your-app` | Your main repository name |
-| `your-core-lib` | Your shared library package |
-| `PROJ-123` | Your issue tracker prefix |
-| `your-company.atlassian.net` | Your Jira instance |
+| Placeholder                  | Replace with                |
+| ---------------------------- | --------------------------- |
+| `your-org`                   | Your GitHub org name        |
+| `your-app`                   | Your main repository name   |
+| `your-core-lib`              | Your shared library package |
+| `PROJ-123`                   | Your issue tracker prefix   |
+| `your-company.atlassian.net` | Your Jira instance          |
 
 ## License
 

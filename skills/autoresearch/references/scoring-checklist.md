@@ -22,6 +22,7 @@ PRIOR_REVIEWS=$(gh api "repos/$REPO/pulls/$PR_NUMBER/comments?per_page=100" \
 **Evidence**: PR #48 had 16 duplicate findings (76% false positive rate)
 
 **Scoring**:
+
 1. Extract all `DRY_RUN_COMMENT:` lines from output
 2. Group by `path` field
 3. For comments on the same file, compare body text — if >50% of non-stopword keywords overlap, mark as duplicate
@@ -48,18 +49,19 @@ If no `DRY_RUN_COMMENT:` lines exist (0 findings), score as PASS.
 **Evidence**: PR #88 had 7 "what do you mean?" author replies
 
 **Scoring**:
+
 1. Extract each `DRY_RUN_COMMENT:` body
 2. Check if body contains BOTH:
    - The phrase `Suggested Fix` (case-insensitive)
    - A code block (triple backticks: ```)
 3. PASS if ALL comments have both. FAIL if ANY comment lacks either.
 
-```bash
+````bash
 TOTAL=$(grep -c "DRY_RUN_COMMENT:" output.txt)
 WITH_FIX=$(grep "DRY_RUN_COMMENT:" output.txt | grep -c "Suggested Fix")
 WITH_CODE=$(grep "DRY_RUN_COMMENT:" output.txt | grep -c '```')
 # PASS if TOTAL == 0 OR (WITH_FIX == TOTAL AND WITH_CODE == TOTAL)
-```
+````
 
 If no `DRY_RUN_COMMENT:` lines exist, score as PASS.
 
@@ -70,6 +72,7 @@ If no `DRY_RUN_COMMENT:` lines exist, score as PASS.
 **Evidence**: PR #89 had 8+ findings on pre-existing code; 6 outdated findings across PRs
 
 **Scoring**:
+
 1. Extract each `DRY_RUN_COMMENT:` path and line number
 2. Check if the path appears in `gh pr diff` output
 3. Check if the line number falls within a changed hunk (lines prefixed with `+` in unified diff)
@@ -94,6 +97,7 @@ If no `DRY_RUN_COMMENT:` lines exist, score as PASS.
 **Evidence**: PR #88 had 4 "BFF handles this" replies; PR #48 had 2 "framework handles this"
 
 **Scoring**:
+
 1. Extract each `DRY_RUN_COMMENT:` body
 2. Check if body contains words like "missing" combined with "validation", "check", "guard", "auth", "verify"
 3. If so, verify the body ALSO contains one of:
@@ -124,6 +128,7 @@ If no comments match the "missing X" pattern, score as PASS.
 **Evidence**: Phase 7 rendering broke on GitHub with 18-row tables
 
 **Scoring**:
+
 1. Extract `DRY_RUN_REVIEW:` body
 2. Determine if this is a follow-up review (output contains "Follow-up Review" or "Prior findings")
 3. Measure character count of body
@@ -149,6 +154,7 @@ If no `DRY_RUN_REVIEW:` line exists, score as FAIL (review should always be gene
 **Evidence**: Verdict must match severity count rules
 
 **Scoring**:
+
 1. Extract `event` from `DRY_RUN_REVIEW:` JSON
 2. Extract finding counts from `REVIEW_COMPLETE:` line
 3. Determine expected verdict:
@@ -182,6 +188,7 @@ echo "Score: $SCORE/6"
 ```
 
 Write results to `scores.json` in the format:
+
 ```json
 {
   "score": 5,

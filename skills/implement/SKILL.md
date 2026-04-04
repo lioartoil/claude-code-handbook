@@ -17,6 +17,7 @@ This skill was refined through 4 retrospectives covering 53 issues: wrong abstra
 `$ARGUMENTS` — a ticket ID (e.g., `PROJ-1784`, `1784`).
 
 Optional flags:
+
 - `--draft` — stop after Phase 3 (plan only, don't implement)
 - `--skip-review` — skip Phase 6 review agents (faster but less thorough)
 
@@ -48,11 +49,13 @@ Optional flags:
 Launch 3 parallel Explore agents:
 
 ### Agent 1: External API Research
+
 - If the feature involves a third-party API: fetch current docs (official docs, SDK examples, or library documentation tools)
 - If the feature uses cloud storage/messaging: check your org's shared utility libraries
 - **Extract exact field names, types, required/optional, constraints**
 
 ### Agent 2: Existing Pattern Scan
+
 - Scan the target repo for how similar features are implemented
 - Check: import grouping, error handling, validation patterns, test patterns
 - Check: CONVENTIONS.md, typed enums, Unicode handling, DB type casts
@@ -66,6 +69,7 @@ Launch 3 parallel Explore agents:
 - **Infrastructure client errors**: New infrastructure clients must return errors gracefully — NOT crash the process. Match existing graceful degradation patterns
 
 ### Agent 3: Prototype & Design Alignment
+
 - If a prototype exists, extract field definitions
 - If tech design exists, extract proposed structs
 - Cross-reference: API schema x prototype x tech design
@@ -135,6 +139,7 @@ For each component in the plan:
 ## Phase 4: Verify (addresses: missed conventions)
 
 Run all checks (adapt commands to your language/toolchain):
+
 ```bash
 # Build
 your-build-command ./...
@@ -149,6 +154,7 @@ your-test-command ./...
 **IMPORTANT**: Run EVERY checklist item on ALL changed files (not just new files). Do not skip.
 
 ### Universal Checks
+
 - [ ] Unicode-aware string length (not byte length) for all character length checks
 - [ ] String truncation must be character-aware (not byte slice)
 - [ ] Proper type casting for complex DB column types (JSON, arrays, etc.)
@@ -178,6 +184,7 @@ your-test-command ./...
 - [ ] .gitignore: no accidental data files
 
 ### Naming Conventions
+
 - [ ] Acronyms follow your org's convention (all-caps vs CamelCase)
 - [ ] Verb-first function names (`FindDeepest` not `DeepestFind`)
 - [ ] Function names <= 20 chars, <= 5 words
@@ -186,11 +193,13 @@ your-test-command ./...
 - [ ] Regular words not treated as acronyms
 
 ### Wiring (critical — bugs caught in retrospectives)
+
 - [ ] New handlers wired in BOTH router AND server initialization
 - [ ] New handlers passed through dependency injection chain
 - [ ] New routes verified: start server locally, hit endpoint, confirm not 404
 
 ### Choreography (prevents scattered state transitions)
+
 - [ ] Terminal state transitions use centralized methods, not scattered direct calls
 - [ ] Multi-step operations centralized in one method — grep for scattered calls
 

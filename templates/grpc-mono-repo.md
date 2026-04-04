@@ -32,37 +32,36 @@ cd process && go run cmd/server/main.go  # Run Process service
 ### Code Style
 
 1. **Naming and spelling**:
-
    - Strictly follow Go naming conventions: https://go.dev/wiki/CodeReviewComments#initialisms
    - US spelling (e.g., `color` not `colour`, `initialize` not `initialise`)
    - Acronyms: Use consistent casing (`ID`, `HTTP`, `URL` - all caps or all lower)
 
 2. **Prefer raw SQL** instead of ORM:
-
    - Use `pgx` for PostgreSQL driver
    - Use `squirrel` for query building
    - Complex queries: Write raw SQL with named parameters
 
 3. **Cases**:
-   | Type | Convention | Example |
-   |------|------------|---------|
-   | File names | snake_case | `user_repository.go` |
-   | Package names | lowercase | `userservice` |
-   | Constants | MixedCaps | `MaxRetryCount`, `DefaultTimeout` |
-   | Exported functions | PascalCase | `GetUserByID` |
-   | Unexported functions | camelCase | `validateInput` |
+
+   | Type                 | Convention | Example                           |
+   | -------------------- | ---------- | --------------------------------- |
+   | File names           | snake_case | `user_repository.go`              |
+   | Package names        | lowercase  | `userservice`                     |
+   | Constants            | MixedCaps  | `MaxRetryCount`, `DefaultTimeout` |
+   | Exported functions   | PascalCase | `GetUserByID`                     |
+   | Unexported functions | camelCase  | `validateInput`                   |
 
 4. **Error handling**:
-
    - Always wrap errors with context: `fmt.Errorf("failed to get user: %w", err)`
    - Use appropriate gRPC status codes:
-     | Situation | Code |
-     |-----------|------|
-     | Invalid input | `codes.InvalidArgument` |
-     | Not found | `codes.NotFound` |
-     | Already exists | `codes.AlreadyExists` |
+
+     | Situation         | Code                     |
+     | ----------------- | ------------------------ |
+     | Invalid input     | `codes.InvalidArgument`  |
+     | Not found         | `codes.NotFound`         |
+     | Already exists    | `codes.AlreadyExists`    |
      | Permission denied | `codes.PermissionDenied` |
-     | Internal error | `codes.Internal` |
+     | Internal error    | `codes.Internal`         |
 
 5. **Logging**:
    - Use structured logging (your-core-lib logger)
@@ -115,7 +114,6 @@ internal/
 ### Library Management
 
 1. **your-core-lib** (shared library):
-
    - ✅ **Put in core-lib**:
      - Middleware (logging, tracing, auth)
      - Common utilities (string, time, validation)
@@ -128,7 +126,6 @@ internal/
    - 🤖 **AI suggestion rule**: If code is used by 3+ services → consider moving to core-lib
 
 2. **yim-proto-hub**: Git submodule for protobuf definitions
-
    - Run `git submodule update --init --recursive` after clone
    - Generate with `make buf`
 
@@ -309,9 +306,9 @@ chore(ci): update GitHub Actions workflow
 
 ## Environment Configuration
 
-| Environment | Config File         | GCP Project  | Branch    |
-| ----------- | ------------------- | ------------ | --------- |
-| Local       | `configs/local.env` | -            | -         |
+| Environment | Config File         | GCP Project         | Branch    |
+| ----------- | ------------------- | ------------------- | --------- |
+| Local       | `configs/local.env` | -                   | -         |
 | Development | `configs/dev.json`  | `your-project-dev`  | `develop` |
 | SIT         | `configs/sit.json`  | `your-project-sit`  | `sit`     |
 | UAT         | `configs/uat.json`  | `your-project-uat`  | `release` |

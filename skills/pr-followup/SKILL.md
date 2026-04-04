@@ -29,12 +29,15 @@ This reviews PR #42 and evaluates responses to two specific discussion threads.
 ## Dynamic Context
 
 ### PR Current State
+
 !`gh pr view --json number,title,state,reviewDecision 2>/dev/null || echo "Fetch PR info manually"`
 
 ### Latest Changes
+
 !`gh pr diff --name-only 2>/dev/null | head -20 || echo "No diff available"`
 
 ### PR Comments (Recent)
+
 !`gh pr view --comments --json comments --jq '.comments[-5:]' 2>/dev/null || echo "No comments"`
 
 ## Review Process
@@ -75,26 +78,27 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}
 
 ## Error Handling
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| "Fetch PR info manually" | Wrong directory or PR not found | Verify PR URL and run `gh pr checkout` |
-| Discussion URL 404 | Comment was deleted or resolved | Note as "DELETED — cannot evaluate" |
-| No developer response | Comment hasn't been addressed yet | Mark as PENDING with "Awaiting response" |
-| gh api rate limit | Too many API calls | Wait 60 seconds, retry with `--paginate` |
-| Closed/merged PR | PR state changed since review | Note current state, evaluate responses anyway |
+| Error                    | Cause                             | Solution                                      |
+| ------------------------ | --------------------------------- | --------------------------------------------- |
+| "Fetch PR info manually" | Wrong directory or PR not found   | Verify PR URL and run `gh pr checkout`        |
+| Discussion URL 404       | Comment was deleted or resolved   | Note as "DELETED — cannot evaluate"           |
+| No developer response    | Comment hasn't been addressed yet | Mark as PENDING with "Awaiting response"      |
+| gh api rate limit        | Too many API calls                | Wait 60 seconds, retry with `--paginate`      |
+| Closed/merged PR         | PR state changed since review     | Note current state, evaluate responses anyway |
 
 ## Output Format
 
 ### Discussion Summary
 
-| # | Original Issue | Developer Response | Resolution |
-|---|----------------|-------------------|------------|
-| 1 | [Your comment summary] | [Their response] | RESOLVED / PENDING / DISAGREED |
-| 2 | [Your comment summary] | [Their response] | RESOLVED / PENDING / DISAGREED |
+| #   | Original Issue         | Developer Response | Resolution                     |
+| --- | ---------------------- | ------------------ | ------------------------------ |
+| 1   | [Your comment summary] | [Their response]   | RESOLVED / PENDING / DISAGREED |
+| 2   | [Your comment summary] | [Their response]   | RESOLVED / PENDING / DISAGREED |
 
 ### Resolution Details
 
 #### Discussion 1: [Topic]
+
 - **Original Concern**: [What you raised]
 - **Developer Response**: [What they said/did]
 - **Assessment**: [Your evaluation]
@@ -103,9 +107,11 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}
 ### Recommended Actions
 
 **Resolved - No Action Needed:**
+
 - [List resolved items]
 
 **Needs Follow-up Comment:**
+
 ```bash
 # Reply to discussion
 gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies \
@@ -113,6 +119,7 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies \
 ```
 
 **New Issues to Raise:**
+
 ```bash
 # New inline comment if needed
 gh api repos/{owner}/{repo}/pulls/{pr}/comments \

@@ -29,7 +29,6 @@ ultrathink, then create or update the daily log based on the current session's w
    - Holidays and leave days
 3. **Check for existing log**: Look for `tracking/daily/{date}.md`
 4. **If creating new log**:
-
    - Copy template from `tracking/daily/_template.md`
    - Replace `{DATE}` with the actual date
    - Replace `{SPRINT_ID}` with current sprint from schedule/CLAUDE.md
@@ -42,7 +41,6 @@ ultrathink, then create or update the daily log based on the current session's w
      - Any pending items from recent sessions
 
 5. **If updating existing log**:
-
    - Move completed items from "Plan for Today" to "Accomplished"
    - Update "In Progress" with current work status
    - Add any blockers encountered
@@ -50,7 +48,6 @@ ultrathink, then create or update the daily log based on the current session's w
    - Update "Tomorrow's Plan" if end of day
 
 6. **Cross-reference**:
-
    - Check CLAUDE.md session handoff for context
    - Include relevant PR/issue numbers
    - Note any JIRA ticket progress

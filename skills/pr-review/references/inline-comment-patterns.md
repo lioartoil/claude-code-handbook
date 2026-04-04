@@ -4,12 +4,12 @@
 
 ## Severity Prefixes
 
-| Prefix | When | Example |
-|--------|------|---------|
-| `BLOCKER:` | Must fix before merge | Security vulnerability, data loss risk |
-| `MAJOR:` | Should fix | Performance issue, missing validation |
-| `MINOR:` | Nice to fix | Style, naming, minor improvement |
-| `SUGGESTION:` | Optional | Alternative approach, future consideration |
+| Prefix        | When                  | Example                                    |
+| ------------- | --------------------- | ------------------------------------------ |
+| `BLOCKER:`    | Must fix before merge | Security vulnerability, data loss risk     |
+| `MAJOR:`      | Should fix            | Performance issue, missing validation      |
+| `MINOR:`      | Nice to fix           | Style, naming, minor improvement           |
+| `SUGGESTION:` | Optional              | Alternative approach, future consideration |
 
 ## Comment Templates
 

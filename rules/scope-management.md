@@ -39,13 +39,13 @@ Before writing ANY code:
 
 ## Size Reference
 
-| Lines Changed | Status | Action |
-|---|---|---|
-| < 200 | Excellent | Ideal PR |
-| 200-500 | Good | Target range |
-| 500-700 | Warning | Justify each file |
-| 700-1,000 | Stop | MUST split |
-| > 1,000 | Rejected | Scope creep |
+| Lines Changed | Status    | Action            |
+| ------------- | --------- | ----------------- |
+| < 200         | Excellent | Ideal PR          |
+| 200-500       | Good      | Target range      |
+| 500-700       | Warning   | Justify each file |
+| 700-1,000     | Stop      | MUST split        |
+| > 1,000       | Rejected  | Scope creep       |
 
 ## Enforcement Rules
 

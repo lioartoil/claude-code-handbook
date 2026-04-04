@@ -55,13 +55,17 @@ template.HTML(userInput)
 
 ```javascript
 // UNSAFE — directly sets HTML from user input (XSS risk)
-element.innerHTML = userInput
+element.innerHTML = userInput;
 
 // SAFE — escapes HTML entities automatically
-element.textContent = userInput
+element.textContent = userInput;
 
 // SAFE (Vue.js) — auto-escaped by template engine
-{{ userInput }}
+{
+  {
+    userInput;
+  }
+}
 
 // UNSAFE (Vue.js) — renders raw HTML without sanitization
 // <div v-html="userInput" />
@@ -71,11 +75,11 @@ element.textContent = userInput
 
 ```javascript
 // UNSAFE
-Object.assign(target, userInput)
-_.merge(target, userInput)
+Object.assign(target, userInput);
+_.merge(target, userInput);
 
 // SAFE — null prototype prevents pollution
-Object.assign(Object.create(null), validated)
+Object.assign(Object.create(null), validated);
 ```
 
 ## Password Storage

@@ -17,6 +17,7 @@ You are an optimization agent applying Karpathy's autoresearch method to the hea
 ### Parse Arguments
 
 Extract from `$ARGUMENTS`:
+
 - **PR_URL** (required): A GitHub PR URL, e.g. `https://github.com/your-org/your-service/pull/100`
 - **--iterations N** (optional, default 3, max 5): Number of optimization rounds
 
@@ -51,6 +52,7 @@ WORKTREE_PATH="/tmp/autoresearch-${REPO_NAME}-${PR_NUMBER}"
 ```
 
 If the repo exists locally at `~/workspace/your-org/$REPO_NAME`:
+
 ```bash
 cd ~/workspace/your-org/$REPO_NAME
 git fetch origin
@@ -58,6 +60,7 @@ git worktree add "$WORKTREE_PATH" "origin/$PR_BRANCH" 2>/dev/null || true
 ```
 
 If it doesn't exist, clone it:
+
 ```bash
 gh repo clone "$REPO" ~/workspace/your-org/$REPO_NAME -- --no-checkout
 cd ~/workspace/your-org/$REPO_NAME
@@ -152,20 +155,21 @@ For each iteration `i` from 1 to N:
 ### 3a. Analyze Failures
 
 Read `scores.json`. Identify which checklist items FAIL. If all pass (6/6), attempt meta-improvements:
+
 - Tighten confidence thresholds (e.g., Medium 80→85)
 - Add worked examples to phases
 - Strengthen false positive exclusion rules
 
 ### 3b. Map Failure to Target Phase
 
-| Failing Item | Target Phase | Strategy |
-|-------------|-------------|----------|
-| 1 (duplicates) | Phase 5.75 | Add keyword overlap detection, strengthen dedup rules |
-| 2 (no fix) | Phase 6 | Add "MUST include Suggested Fix with code block" |
-| 3 (not in diff) | Phase 4.5 | Add "verify line in diff before flagging" |
-| 4 (upstream FP) | Phase 4 | Add "trace call chain before flagging missing validation" |
-| 5 (length) | Phase 7 | Tighten compact format, add char count reminder |
-| 6 (verdict) | Phase 7 | Move verdict logic closer to API call, add verification step |
+| Failing Item    | Target Phase | Strategy                                                     |
+| --------------- | ------------ | ------------------------------------------------------------ |
+| 1 (duplicates)  | Phase 5.75   | Add keyword overlap detection, strengthen dedup rules        |
+| 2 (no fix)      | Phase 6      | Add "MUST include Suggested Fix with code block"             |
+| 3 (not in diff) | Phase 4.5    | Add "verify line in diff before flagging"                    |
+| 4 (upstream FP) | Phase 4      | Add "trace call chain before flagging missing validation"    |
+| 5 (length)      | Phase 7      | Tighten compact format, add char count reminder              |
+| 6 (verdict)     | Phase 7      | Move verdict logic closer to API call, add verification step |
 
 If multiple items fail, prioritize: 3 > 4 > 1 > 2 > 6 > 5 (items that cause author frustration first).
 
@@ -220,6 +224,7 @@ Regenerate `dashboard.html` with updated scores. The HTML auto-refreshes every 3
 Write a self-contained HTML file to `~/.claude/state/autoresearch/dashboard.html`. Use the template from `references/dashboard-template.html`, filling in data from `scores.json`.
 
 The dashboard shows:
+
 - PR URL and iteration count
 - Score progression (X/6 per round)
 - Pass/fail grid per checklist item
