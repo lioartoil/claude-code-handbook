@@ -1,0 +1,101 @@
+{
+  "mcpServers": {
+
+    "_comment_docs": "── Documentation ──────────────────────────────────────",
+
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    },
+
+    "_comment_code": "── Code & Repo ───────────────────────────────────────",
+
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "gitlab": {
+      "type": "http",
+      "url": "https://gitlab.com/api/v4/mcp",
+      "headers": {
+        "Authorization": "Bearer ${GITLAB_TOKEN}"
+      }
+    },
+    "greptile": {
+      "type": "http",
+      "url": "https://api.greptile.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${GREPTILE_API_KEY}"
+      }
+    },
+
+    "_comment_pm": "── Project Management ─────────────────────────────────",
+
+    "atlassian": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    },
+    "linear": {
+      "type": "http",
+      "url": "https://mcp.linear.app/mcp"
+    },
+    "asana": {
+      "type": "sse",
+      "url": "https://mcp.asana.com/sse"
+    },
+
+    "_comment_backend": "── Database & Backend ─────────────────────────────────",
+
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp"
+    },
+    "firebase": {
+      "command": "npx",
+      "args": ["-y", "firebase-tools@latest", "mcp"]
+    },
+
+    "_comment_comms": "── Communication ──────────────────────────────────────",
+
+    "slack": {
+      "type": "http",
+      "url": "https://mcp.slack.com/mcp"
+    },
+
+    "_comment_testing": "── Browser & Testing ──────────────────────────────────",
+
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"]
+    },
+
+    "_comment_infra": "── Infrastructure ─────────────────────────────────────",
+
+    "terraform": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "TFE_TOKEN=${TFE_TOKEN}",
+        "hashicorp/terraform-mcp-server:0.4.0"
+      ]
+    },
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from", "git+https://github.com/oraios/serena",
+        "serena", "start-mcp-server"
+      ]
+    }
+  }
+}

@@ -176,6 +176,26 @@ CLAUDE.md templates for bootstrapping new projects. Each is under 200 lines — 
 | `node-express.md`          | Node.js + Express + TypeScript + pnpm monorepo |
 | `rust-cli.md`              | Rust + Cargo CLI project                       |
 
+## MCP Servers
+
+Example `.mcp.json` with 16 MCP servers organized by category. Copy to your project root or `~/.claude/`:
+
+```bash
+cp presets/mcp-starter.json .mcp.json
+```
+
+| Category               | Servers                                     |
+| ---------------------- | ------------------------------------------- |
+| **Documentation**      | Context7, Microsoft Learn                   |
+| **Code & Repo**        | GitHub, GitLab, Greptile                    |
+| **Project Management** | Atlassian, Linear, Asana                    |
+| **Database & Backend** | Supabase, Firebase                          |
+| **Communication**      | Slack                                       |
+| **Browser & Testing**  | Playwright, Chrome DevTools                 |
+| **Infrastructure**     | Terraform, Serena                           |
+
+Servers requiring authentication use `${ENV_VAR}` expansion — set tokens in your shell environment.
+
 ## Customization
 
 Most files use placeholder values you should replace:
