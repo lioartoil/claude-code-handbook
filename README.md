@@ -87,6 +87,15 @@ Skills are auto-activated by Claude when relevant context is detected. They're m
 | `get-api-docs`   | Fetch API docs before writing integration code                           |
 | `verify-pr`      | Full PR verification checklist (build, test, push)                       |
 
+## Agents
+
+Custom subagents and Agent Teams. See [`agents/README.md`](agents/README.md) for the full guide covering subagent definitions, Agent Teams, coordination patterns, and quality gate hooks.
+
+| Agent            | Purpose               | Tools                  |
+| ---------------- | --------------------- | ---------------------- |
+| `code-reviewer`  | PR review specialist  | Read, Grep, Glob, Bash |
+| `sprint-planner` | Sprint coordination   | Read, Grep, Glob, Bash |
+
 ## Rules
 
 Rules are auto-loaded instructions that apply to every session. These are my non-negotiable constraints. Language-specific rules use `paths:` frontmatter to load only when editing matching files.

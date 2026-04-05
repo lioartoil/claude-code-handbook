@@ -41,6 +41,7 @@
     "pipefail",
     "Println",
     "pycache",
+    "respawn",
     "RLENGTH",
     "RSTART",
     "semgrep",
