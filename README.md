@@ -16,7 +16,19 @@ templates/     CLAUDE.md templates for new projects
 
 ## Quick Start
 
-### Option 1: Cherry-pick what you need
+### Option 1: Install as a plugin (recommended)
+
+```bash
+# Test locally
+claude --plugin-dir ./claude-code-handbook
+
+# Or install from marketplace (when available)
+claude plugin install claude-code-handbook
+```
+
+> **Note:** The plugin includes commands, skills, and hooks. Rules and templates are not supported by the plugin system — see Option 2 below to install those manually.
+
+### Option 2: Cherry-pick what you need
 
 Copy individual files to your Claude Code config:
 
@@ -77,27 +89,65 @@ Skills are auto-activated by Claude when relevant context is detected. They're m
 
 ## Rules
 
-Rules are auto-loaded instructions that apply to every session. These are my non-negotiable constraints.
+Rules are auto-loaded instructions that apply to every session. These are my non-negotiable constraints. Language-specific rules use `paths:` frontmatter to load only when editing matching files.
 
-| Rule                     | What it enforces                                              |
-| ------------------------ | ------------------------------------------------------------- |
-| `scope-management.md`    | PR size limits (200-500 lines target), scope creep prevention |
-| `plan-mode.md`           | Mandatory plan-before-execute workflow                        |
-| `convention-defaults.md` | Go/TypeScript naming and structure conventions                |
-| `code-quality.md`        | cSpell configuration scoping, quality standards               |
-| `api-docs.md`            | Always check current docs before writing API code             |
-| `security.md`            | Never access macOS Keychain (3-layer block)                   |
+| Rule                       | What it enforces                                              | Scoped to         |
+| -------------------------- | ------------------------------------------------------------- | ----------------- |
+| `scope-management.md`      | PR size limits (200-500 lines target), scope creep prevention | All files         |
+| `plan-mode.md`             | Mandatory plan-before-execute workflow                        | All files         |
+| `convention-go.md`         | Go naming, structure, and complexity conventions              | `**/*.go`         |
+| `convention-typescript.md` | TypeScript/Vue component and composable conventions           | `**/*.ts,tsx,vue` |
+| `convention-universal.md`  | Cross-language conventions (naming, logging, TODOs)           | All files         |
+| `code-quality.md`          | cSpell configuration scoping, quality standards               | All files         |
+| `api-docs.md`              | Always check current docs before writing API code             | All files         |
+| `security.md`              | Never access macOS Keychain (3-layer block)                   | All files         |
 
 ## Hooks
 
-Hooks run before/after Claude Code tool calls. They add guardrails and automation.
+Hooks run before/after Claude Code tool calls. They add guardrails and automation. See [`hooks/README.md`](hooks/README.md) for the full guide covering all 4 hook types (command, prompt, agent, HTTP).
 
-| Hook                      | Trigger          | Purpose                                   |
-| ------------------------- | ---------------- | ----------------------------------------- |
-| `block-keychain.sh`       | PreToolUse:Bash  | Blocks `security` keychain commands       |
-| `dedup-hook.mjs`          | PreToolUse:Write | Detects duplicate code before file writes |
-| `typecheck-hook.sh`       | PostToolUse:Edit | TypeScript type checking after edits      |
-| `setup-keychain-block.sh` | Manual           | One-time setup for the keychain block     |
+| Hook                      | Type    | Trigger          | Purpose                                   |
+| ------------------------- | ------- | ---------------- | ----------------------------------------- |
+| `block-keychain.sh`       | Command | PreToolUse:Bash  | Blocks `security` keychain commands       |
+| `dedup-hook.mjs`          | Command | PreToolUse:Write | Detects duplicate code before file writes |
+| `typecheck-hook.sh`       | Command | PostToolUse:Edit | TypeScript type checking after edits      |
+| Anti-rationalization gate | Prompt  | Stop             | Blocks incomplete work with excuses       |
+| `setup-keychain-block.sh` | Command | Manual           | One-time setup for the keychain block     |
+
+## Recommended Plugins
+
+The plugin stack I use alongside this handbook. Install all at once:
+
+```bash
+bash presets/install-plugins.sh
+```
+
+| Category           | Plugin                 | What it does                                     |
+| ------------------ | ---------------------- | ------------------------------------------------ |
+| **Core Workflow**  | `superpowers`          | Planning, brainstorming, TDD, debugging skills   |
+|                    | `skill-creator`        | Create and iterate on custom skills              |
+|                    | `playground`           | Interactive HTML playgrounds                     |
+|                    | `agent-sdk-dev`        | Build Claude Agent SDK apps                      |
+|                    | `claude-code-setup`    | Analyze and recommend automations                |
+| **Code Review**    | `code-review`          | Multi-agent PR review with confidence scoring    |
+|                    | `pr-review-toolkit`    | Specialized review agents (tests, types, errors) |
+|                    | `code-simplifier`      | Code simplification and refactoring              |
+|                    | `security-guidance`    | OWASP-informed security guidance                 |
+| **Git & Docs**     | `commit-commands`      | Commit, push, and PR workflows                   |
+|                    | `claude-md-management` | Audit and improve CLAUDE.md files                |
+|                    | `feature-dev`          | Guided feature development                       |
+| **Language (LSP)** | `typescript-lsp`       | TypeScript/JavaScript language server            |
+|                    | `gopls-lsp`            | Go language server                               |
+| **Integrations**   | `context7`             | Up-to-date library documentation                 |
+|                    | `microsoft-docs`       | Microsoft/Azure documentation lookup             |
+|                    | `remember`             | Session state persistence                        |
+|                    | `ai-firstify`          | AI-first project design analysis                 |
+| **Frontend**       | `frontend-design`      | Production-grade frontend interface design       |
+| **Specialized**    | `ralph-loop`           | Autonomous iteration framework                   |
+|                    | `atomic-agents`        | Multi-agent orchestration patterns               |
+|                    | `data-engineering`     | Airflow, dbt, and data pipelines                 |
+|                    | `huggingface-skills`   | HF model training, datasets, deployment          |
+| **Terminal**       | `warp`                 | Warp terminal notifications                      |
 
 ## Templates
 

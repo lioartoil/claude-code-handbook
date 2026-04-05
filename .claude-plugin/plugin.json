@@ -1,0 +1,11 @@
+{
+  "name": "claude-code-handbook",
+  "description": "Battle-tested commands, skills, and hooks for PR reviews, debugging, TDD, sprint planning, and engineering workflows",
+  "version": "1.0.0",
+  "author": {
+    "name": "Chanakan Nuekreo",
+    "url": "https://github.com/lioartoil"
+  },
+  "repository": "https://github.com/lioartoil/claude-code-handbook",
+  "license": "MIT"
+}
