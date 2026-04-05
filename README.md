@@ -120,6 +120,7 @@ Hooks run before/after Claude Code tool calls. They add guardrails and automatio
 | `block-keychain.sh`       | Command | PreToolUse:Bash  | Blocks `security` keychain commands       |
 | `dedup-hook.mjs`          | Command | PreToolUse:Write | Detects duplicate code before file writes |
 | `typecheck-hook.sh`       | Command | PostToolUse:Edit | TypeScript type checking after edits      |
+| `cspell-precommit.sh`     | Command | PreToolUse:Bash  | Claude-powered spelling fix before commit |
 | Anti-rationalization gate | Prompt  | Stop             | Blocks incomplete work with excuses       |
 | `setup-keychain-block.sh` | Command | Manual           | One-time setup for the keychain block     |
 

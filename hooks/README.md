@@ -25,6 +25,7 @@ Shell scripts or Node.js scripts. Exit 0 to allow, exit 2 to block.
 | `block-keychain.sh`   | PreToolUse:Bash  | Blocks macOS `security` commands (simple variant)|
 | `dedup-hook.mjs`      | PreToolUse:Write | Detects duplicate code before writes             |
 | `typecheck-hook.sh`   | PostToolUse:Edit | TypeScript type checking after edits             |
+| `cspell-precommit.sh` | PreToolUse:Bash  | Claude-powered spelling validation before commit |
 
 `risk-classifier.sh` is the recommended default — it supersedes `block-keychain.sh` by adding MEDIUM-tier warnings (credential reads, external POST, dangerous permissions, recursive deletes) and a JSONL audit trail at `~/.claude/state/hook-audit.jsonl`.
 

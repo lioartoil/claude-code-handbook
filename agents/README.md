@@ -215,3 +215,66 @@ Bad:
 - **One team per session** — clean up before creating a new team
 - **Permissions set at spawn** — teammates inherit lead's permission mode
 - **No split panes in VS Code** — use in-process mode or native terminal with tmux
+
+---
+
+## Practical Patterns
+
+Proven patterns from real-world Agent Teams usage.
+
+### Prompt Templates
+
+**Parallel code review:**
+```
+Create an agent team to review PR #142. Spawn three reviewers:
+- security-reviewer: Focus on auth, input validation, and secrets
+- performance-specialist: Focus on query optimization and caching
+- test-engineer: Focus on coverage and edge cases
+Have each review independently and report findings.
+```
+
+**Feature development with file isolation:**
+```
+Create an agent team with two teammates:
+- "backend": Implement the /api/users endpoint in src/routes/
+- "frontend": Build the user profile component in src/components/
+They should coordinate on the API contract via messaging.
+```
+
+**Competing hypotheses debugging:**
+```
+App crashes after one message. Spawn 3 teammates to investigate different
+hypotheses. Have them talk to each other to try to disprove each other's
+theories, like a scientific debate. Report consensus.
+```
+
+**QA swarm:**
+```
+Use a team of 5 agents to QA the app at http://localhost:3000/:
+- qa-pages: Test all page routes return 200
+- qa-links: Check all internal links
+- qa-seo: Validate meta tags and OG images
+- qa-a11y: Check heading hierarchy and ARIA
+- qa-perf: Measure load times and bundle size
+```
+
+### What Works vs What Fails
+
+| Works | Fails |
+| ----- | ----- |
+| Small focused teams (2-5 agents) | "One big team" with broad scope |
+| Each teammate owns different files | Two teammates editing the same file |
+| Plan first, then parallelize | Vague prompts without decomposition |
+| Read-only tasks first (review, QA) | Set-and-forget without monitoring |
+| File/domain isolation per teammate | Tightly-coupled components across agents |
+| 5-6 tasks per teammate | Sequential/dependent work (use subagents) |
+
+### Cost Reference
+
+| Configuration | Token Usage | Relative Cost |
+| ------------- | ----------- | ------------- |
+| Solo session  | ~200k       | 1x            |
+| 3 subagents   | ~440k       | ~2.2x         |
+| 3-person team | ~800k       | ~4x           |
+
+**Optimization:** Use Opus as lead (decisions) + Sonnet for teammates (execution). Clean up teams promptly — idle teammates still consume tokens.

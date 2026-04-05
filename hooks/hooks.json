@@ -11,6 +11,17 @@
         ]
       },
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit*)",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/cspell-precommit.sh",
+            "timeout": 30
+          }
+        ]
+      },
+      {
         "matcher": "Write|Edit",
         "hooks": [
           {
