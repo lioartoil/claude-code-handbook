@@ -57,6 +57,15 @@ Plain markdown. No frontmatter. Auto-loaded into every Claude Code session when 
 - Use placeholder values (`your-org`, `your-app`, `your-core-lib`, `PROJ-123`, `your-company.atlassian.net`) for org-specific references — users replace these during setup
 - Private/personal commands (daily-log, weekly-review, quarterly-review, sprint-status) use restricted file permissions
 
+## Compact Instructions
+
+When compacting, always preserve:
+
+- Which files were modified and the specific changes made
+- The current task and remaining steps
+- Any decisions made about skill frontmatter, hook configuration, or rule scoping
+- Active issues being worked on (issue number and title)
+
 ## Validating Changes
 
 No build or test commands exist. To validate:

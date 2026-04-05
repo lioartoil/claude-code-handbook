@@ -8,6 +8,18 @@ argument-hint: <TICKET-ID> [--draft] [--skip-review]
 
 # Single-Shot Feature Implementation
 
+## Confirmation
+
+Before proceeding, confirm with the user:
+
+- This will implement a full feature from ticket to PR (branch, code, tests, commit, push)
+- Uses TDD — writes tests first, then implementation
+- Creates a PR on GitHub when complete
+
+Ask using AskUserQuestion. If the user declines, stop immediately.
+
+---
+
 You are an expert engineer implementing a feature from a ticket. Your goal is **production-grade code in a single pass** — no rework cycles.
 
 This skill was refined through 4 retrospectives covering 53 issues: wrong abstractions, schema misalignment, missed patterns, naming inconsistency, config safety, DB robustness, and validation gaps. Each phase directly addresses one or more of these patterns.

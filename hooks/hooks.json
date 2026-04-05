@@ -31,6 +31,17 @@
         ]
       }
     ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Context was compacted. Re-read CLAUDE.md and confirm all project rules are loaded before proceeding.'"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [

@@ -8,6 +8,18 @@ argument-hint: '[PR number]'
 
 # Verify PR
 
+## Confirmation
+
+Before proceeding, confirm with the user:
+
+- This will run the full verification checklist (build, test, mocks, lint)
+- It may squash commits, force-push, and update the PR description on GitHub
+- All review comments will be validated and marked as resolved
+
+Ask using AskUserQuestion. If the user declines, stop immediately.
+
+---
+
 Run the complete verification checklist for the current branch's PR.
 
 ## Input

@@ -59,11 +59,12 @@ Slash commands for Claude Code. Copy to `~/.claude/commands/` (global) or `.clau
 
 ### Session & Workspace
 
-| Command            | Description                                                |
-| ------------------ | ---------------------------------------------------------- |
-| `/session-handoff` | Capture session context for CLAUDE.md handoff              |
-| `/clean-workspace` | Find and clean temp files, build artifacts, duplicates     |
-| `/sync-claude`     | Bidirectional sync between live ~/.claude/ and repo backup |
+| Command               | Description                                                |
+| --------------------- | ---------------------------------------------------------- |
+| `/context-management` | Guide for /compact, /clear, and session lifecycle          |
+| `/session-handoff`    | Capture session context for CLAUDE.md handoff              |
+| `/clean-workspace`    | Find and clean temp files, build artifacts, duplicates     |
+| `/sync-claude`        | Bidirectional sync between live ~/.claude/ and repo backup |
 
 ### Meta
 

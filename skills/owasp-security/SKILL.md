@@ -1,6 +1,7 @@
 ---
 name: owasp-security
 description: Security code review using OWASP Top 10:2025 standards. Use when reviewing auth code, payment logic, user input handling, or when someone says "security review", "check for vulnerabilities", "OWASP check", or "is this code secure?".
+context: fork
 ---
 
 # OWASP Security Review

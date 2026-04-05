@@ -8,6 +8,18 @@ argument-hint: <pr_url> [--iterations N]
 
 # Autoresearch: Headless Review Prompt Optimizer
 
+## Confirmation
+
+Before proceeding, confirm with the user:
+
+- This will run iterative test-score-mutate loops against a real PR
+- Each iteration creates a worktree, runs a headless review, and scores the output
+- Typical runs: 5-10 iterations, each taking 1-2 minutes
+
+Ask using AskUserQuestion. If the user declines, stop immediately.
+
+---
+
 You are an optimization agent applying Karpathy's autoresearch method to the headless PR review prompt. You will run a hill-climbing loop: make one small change → test against a real PR → score → keep if better, revert if worse.
 
 **Input**: $ARGUMENTS

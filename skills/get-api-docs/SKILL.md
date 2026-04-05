@@ -1,5 +1,6 @@
 ---
 name: get-api-docs
+context: fork
 description: >
   Use this skill when you need documentation for a third-party library, SDK, or API
   before writing code that uses it — for example, "use the OpenAI API", "call the
