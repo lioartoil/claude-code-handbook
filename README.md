@@ -86,6 +86,11 @@ Skills are auto-activated by Claude when relevant context is detected. They're m
 | `implement`      | Single-shot ticket-to-PR implementation (TDD, pattern scan, self-review) |
 | `get-api-docs`   | Fetch API docs before writing integration code                           |
 | `verify-pr`      | Full PR verification checklist (build, test, push)                       |
+| `spacetimedb-cli` | SpacetimeDB project scaffolding and dev loop                            |
+| `spacetimedb-concepts` | SpacetimeDB architecture and identity/auth                         |
+| `spacetimedb-rust` | SpacetimeDB Rust SDK (tables, reducers, lifecycle)                     |
+| `spacetimedb-typescript` | SpacetimeDB TypeScript SDK (React integration, subscriptions)    |
+| `tanstack`       | TanStack Query/Router/Table/Form with SpacetimeDB integration            |
 
 ## Agents
 
@@ -161,9 +166,15 @@ bash presets/install-plugins.sh
 
 ## Templates
 
-CLAUDE.md templates for bootstrapping new projects:
+CLAUDE.md templates for bootstrapping new projects. Each is under 200 lines — concise, specific, concrete.
 
-- **`grpc-mono-repo.md`** — For gRPC mono-repo projects with Go backend + Nuxt frontend
+| Template                   | Stack                                          |
+| -------------------------- | ---------------------------------------------- |
+| `grpc-mono-repo.md`        | gRPC mono-repo (Go + Nuxt + GCP Cloud Run)    |
+| `nextjs-typescript.md`     | Next.js 15 + React 19 + TypeScript + Tailwind  |
+| `python-fastapi.md`        | Python 3.12 + FastAPI + uv + ruff + pytest     |
+| `node-express.md`          | Node.js + Express + TypeScript + pnpm monorepo |
+| `rust-cli.md`              | Rust + Cargo CLI project                       |
 
 ## Customization
 
