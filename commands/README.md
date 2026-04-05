@@ -2,6 +2,10 @@
 
 Slash commands for Claude Code. Copy to `~/.claude/commands/` (global) or `.claude/commands/` (project).
 
+### Commands vs Skills
+
+Commands and skills are **merged** — both create `/command-name` and work identically. Use commands for self-contained workflows (single file). Use skills when you need frontmatter control (`context: fork`, `allowed-tools`, `paths`), supporting `references/` files, or auto-activation by Claude. Security-focused review is in `skills/owasp-security/` (with reference files).
+
 ## Usage
 
 ```
@@ -31,7 +35,6 @@ Slash commands for Claude Code. Copy to `~/.claude/commands/` (global) or `.clau
 | --------------------- | -------------------------------------------------------------------------- |
 | `/review-and-comment` | Full PR review with inline GitHub comments (primary)                       |
 | `/orchestrate-review` | Multi-agent parallel review for large/risky PRs (>300 lines, auth/payment) |
-| `/owasp-security`     | OWASP Top 10:2025 security-focused review                                  |
 
 ### TDD & Implementation
 
