@@ -1,3 +1,9 @@
+---
+name: orchestrate-review
+description: Use when reviewing large/complex PRs (>300 lines, multi-concern). Dispatches specialized reviewer agents in parallel. For standard PRs, use /review-and-comment instead.
+argument-hint: "<pr-url-or-number>"
+---
+
 # Orchestrate Review
 
 Run a multi-agent PR review with specialized reviewers in parallel.
@@ -9,12 +15,12 @@ PR: $ARGUMENTS
 
 ## Agent Roster
 
-| Agent               | Focus Area                                        | Activate When               | Key Criteria                                        |
-| ------------------- | ------------------------------------------------- | --------------------------- | --------------------------------------------------- |
-| **Correctness**     | Logic bugs, edge cases, error handling, data flow | Always                      | Does it work? Edge cases handled?                   |
-| **Security**        | OWASP Top 10, auth, injection, data exposure      | Always                      | Reuses `/owasp-security` checklist                  |
-| **Performance**     | N+1 queries, memory, concurrency, DB indexes      | BE files changed            | Missing indexes, unbounded queries, goroutine leaks |
-| **JIRA Compliance** | Acceptance criteria coverage, requirement gaps    | When `--jira` flag provided | AC met? Story points justified?                     |
+| Agent | Focus Area | Activate When | Key Criteria |
+|-------|-----------|---------------|--------------|
+| **Correctness** | Logic bugs, edge cases, error handling, data flow | Always | Does it work? Edge cases handled? |
+| **Security** | OWASP Top 10, auth, injection, data exposure | Always | Reuses `/owasp-security` checklist |
+| **Performance** | N+1 queries, memory, concurrency, DB indexes | BE files changed | Missing indexes, unbounded queries, goroutine leaks |
+| **JIRA Compliance** | Acceptance criteria coverage, requirement gaps | When `--jira` flag provided | AC met? Story points justified? |
 
 ## Step 1: Setup
 
@@ -71,18 +77,18 @@ After all agents complete:
 
 ### Agent Activity Summary
 
-| Agent       | Findings | Blockers | Status       |
-| ----------- | -------- | -------- | ------------ |
-| Correctness | X        | Y        | Done         |
-| Security    | X        | Y        | Done         |
-| Performance | X        | Y        | Done/Skipped |
-| JIRA        | X        | Y        | Done/Skipped |
+| Agent | Findings | Blockers | Status |
+|-------|----------|----------|--------|
+| Correctness | X | Y | Done |
+| Security | X | Y | Done |
+| Performance | X | Y | Done/Skipped |
+| JIRA | X | Y | Done/Skipped |
 
 ### Consolidated Findings
 
-| #   | Severity | File:Line | Issue | Source Agent | Suggestion |
-| --- | -------- | --------- | ----- | ------------ | ---------- |
-| 1   | BLOCKER  | path:123  | ...   | Security     | ...        |
+| # | Severity | File:Line | Issue | Source Agent | Suggestion |
+|---|----------|-----------|-------|-------------|------------|
+| 1 | BLOCKER | path:123 | ... | Security | ... |
 
 ### Verdict
 
@@ -94,10 +100,10 @@ After all agents complete:
 
 ## When to Use (vs `/review-and-comment`)
 
-| Criterion   | `/review-and-comment` | `/orchestrate-review`         |
-| ----------- | --------------------- | ----------------------------- |
-| PR size     | < 300 lines           | > 500 lines                   |
-| Risk level  | Standard              | Auth, payment, data-sensitive |
-| Reviewer    | Single agent pass     | Multi-agent parallel          |
-| Speed       | Faster                | More thorough                 |
-| Team member | Experienced           | New (more thorough review)    |
+| Criterion | `/review-and-comment` | `/orchestrate-review` |
+|-----------|----------------------|-----------------------|
+| PR size | < 300 lines | > 500 lines |
+| Risk level | Standard | Auth, payment, data-sensitive |
+| Reviewer | Single agent pass | Multi-agent parallel |
+| Speed | Faster | More thorough |
+| Team member | Experienced | New (more thorough review) |

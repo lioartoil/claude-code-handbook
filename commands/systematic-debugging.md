@@ -1,3 +1,9 @@
+---
+name: systematic-debugging
+description: Use when investigating a bug systematically. Apply structured debugging methodology — NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.
+argument-hint: "<issue-description>"
+---
+
 # Systematic Debugging
 
 Apply this structured debugging methodology to investigate the issue described below. **NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST.**
@@ -44,7 +50,6 @@ Issue: $ARGUMENTS
 ### STOP After 3 Failed Fixes
 
 If 3+ attempted fixes have failed:
-
 - **STOP fixing symptoms**
 - Question whether the architecture is sound
 - Re-examine your assumptions from Phase 1
@@ -53,7 +58,6 @@ If 3+ attempted fixes have failed:
 ### Red Flags (Process Violations)
 
 You are violating this process if you:
-
 - [ ] Attempt a "quick fix" before understanding the root cause
 - [ ] Propose a solution before tracing the data flow
 - [ ] Skip reproduction and go straight to code changes

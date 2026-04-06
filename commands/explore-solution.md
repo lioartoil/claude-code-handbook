@@ -1,3 +1,8 @@
+---
+name: explore-solution
+description: Use BEFORE committing to an implementation approach. Generates and compares 2-3 solution candidates with trade-offs.
+---
+
 # Explore Solution
 
 Generate and compare solution approaches BEFORE committing to implementation.
@@ -32,7 +37,6 @@ For each approach, provide:
 **Core Idea**: [1 sentence — what makes this approach different]
 
 **How It Works**:
-
 1. [Step 1]
 2. [Step 2]
 3. [Step 3]
@@ -53,15 +57,15 @@ For each approach, provide:
 
 ## Phase 3: Trade-off Matrix
 
-| Dimension                 | Approach A | Approach B | Approach C |
-| ------------------------- | ---------- | ---------- | ---------- |
-| Complexity                |            |            |            |
-| Time to implement         |            |            |            |
-| Risk of breaking existing |            |            |            |
-| Long-term maintainability |            |            |            |
-| Team familiarity          |            |            |            |
-| Reversibility             |            |            |            |
-| Operational overhead      |            |            |            |
+| Dimension | Approach A | Approach B | Approach C |
+|-----------|-----------|-----------|-----------|
+| Complexity | | | |
+| Time to implement | | | |
+| Risk of breaking existing | | | |
+| Long-term maintainability | | | |
+| Team familiarity | | | |
+| Reversibility | | | |
+| Operational overhead | | | |
 
 ## Phase 4: Decision Inputs (NOT Decision)
 

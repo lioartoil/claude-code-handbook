@@ -1,3 +1,9 @@
+---
+name: root-cause-tracing
+description: Use when debugging a bug to find its origin. Traces backward through call chains to find the original trigger. Never fixes just where the error appears.
+argument-hint: "<bug-description>"
+---
+
 # Root Cause Tracing
 
 Trace the bug or issue below backward through the call chain to find the original trigger. **NEVER fix just where the error appears.**
@@ -17,7 +23,6 @@ Bugs manifest deep in the call stack, but the root cause is upstream. Your insti
 ### Step 1: Observe the Symptom
 
 Document exactly what you see:
-
 - Error message and full stack trace
 - Which component/service reports the error
 - When it happens (always? intermittent? under load?)
@@ -25,7 +30,6 @@ Document exactly what you see:
 ### Step 2: Find the Immediate Cause
 
 What code directly produces this error?
-
 - Read the error line in source code
 - Identify what value/state is wrong at that point
 - Example: `db.Where("space_id = ?", spaceID)` returns 0 rows — is `spaceID` empty?
@@ -33,7 +37,6 @@ What code directly produces this error?
 ### Step 3: Ask "What Called This?"
 
 Trace one level up:
-
 - Who passed the invalid value?
 - Where did they get it from?
 - What transformation happened between caller and callee?
@@ -47,7 +50,6 @@ Error in handler → called by middleware → called by router → bad value fro
 ```
 
 At each level, ask:
-
 - What value was passed?
 - Was it already wrong at this point?
 - Where did it come from?
@@ -55,7 +57,6 @@ At each level, ask:
 ### Step 5: Find the Original Trigger
 
 The root cause is where valid data first becomes invalid:
-
 - A default value that should have been set
 - A race condition between initialization and use
 - A missing validation at system boundary
@@ -86,7 +87,6 @@ SELECT ... FROM hierarchy_positions WHERE space_id = $1;
 ```
 
 **Tips:**
-
 - Log BEFORE the dangerous operation, not after it fails
 - Include: input values, caller info, timestamps, environment context
 - Use structured logging (key=value) for searchability

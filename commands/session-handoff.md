@@ -1,3 +1,9 @@
+---
+name: session-handoff
+description: Use at the end of a session to capture context for the next session. Generates session handoff document with state, decisions, and next steps.
+disable-model-invocation: true
+---
+
 # /session-handoff
 
 Captures and preserves important session context for seamless handoff between Claude sessions across any project.
@@ -23,6 +29,44 @@ This global command intelligently creates or updates a project's CLAUDE.md file 
 ## Prompt
 
 Think carefully about the current session's work, then create or update the project's CLAUDE.md file to preserve important context for the next session. Follow these steps:
+
+### Step 0: Git State Detection (MANDATORY — run before anything else)
+
+Run these commands and capture the output:
+
+```bash
+git remote get-url origin 2>/dev/null   # detect org
+git branch --show-current               # current branch
+git status --short                      # dirty files
+git rev-list --left-right --count origin/$(git branch --show-current)...HEAD 2>/dev/null  # ahead/behind
+git stash list                          # stash entries
+```
+
+**Detect the org** from the remote URL and apply the matching commit strategy:
+
+| Remote contains | Org | Commit Strategy |
+|---|---|---|
+| `chanakan-art` | Personal meta-projects | `git fetch origin && git merge --ff-only`, then commit handoff files, push |
+| `centraldigital` | Org production repos | `git fetch origin && git rebase origin/develop` (or main), then amend the handoff commit, force push the `claude/session-handoff` branch |
+| `lioartoil` | Personal repos | Write to `~/.claude/projects/<project-path>/` local memory ONLY — do NOT modify repo CLAUDE.md or push |
+
+Display detected org + strategy to the user before proceeding with the handoff content.
+
+Include a **Git State** section in the handoff output:
+
+```markdown
+## Git State
+
+- **Branch**: `<branch>` (ahead N, behind N)
+- **Worktree**: clean | N uncommitted (M staged, N unstaged)
+- **Stash**: N entries
+- **Org**: chanakan-art | centraldigital | lioartoil
+- **Strategy**: fetch+ff+push | rebase+amend+force-push | local-only
+```
+
+After writing the handoff content, execute the commit strategy for the detected org.
+
+### Step 1-3: Session Content
 
 1. **Check for existing CLAUDE.md** in the current working directory
 2. **Analyze current session** to identify:
@@ -63,6 +107,12 @@ If creating new CLAUDE.md, use this template:
 - [x] Completed: [List completed items]
 - [ ] In Progress: [List ongoing work]
 - [ ] Blocked: [List blockers]
+
+### Git State
+
+- **Branch**: `[branch]` (ahead N, behind N)
+- **Worktree**: [clean | N uncommitted]
+- **Org**: [detected org] → [strategy]
 
 ### Next Session Priorities
 
@@ -108,7 +158,7 @@ Additional guidelines:
 - Include specific file paths, commands, or code snippets only if essential
 - Maintain any project-specific conventions found in existing CLAUDE.md
 - If the project uses specific frameworks or tools, mention relevant context
-- Include git branch information if relevant
+- **Always include the Git State section** — branch, dirty state, org, strategy (from Step 0)
 - Note any external dependencies or API keys needed
 
 The goal is to enable any Claude instance (or the same instance in a new session) to quickly understand the project state and continue work effectively.

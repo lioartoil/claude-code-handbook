@@ -1,3 +1,9 @@
+---
+name: review-and-comment
+description: Use when reviewing PRs and posting inline GitHub comments with JIRA integration. Full pipeline — analyze + post. Business correctness focus.
+argument-hint: "<pr-url-or-number>"
+---
+
 # Global PR Review and Comment Command
 
 Review pull request and automatically post individual inline comments via GitHub API with business correctness focus.
@@ -44,8 +50,8 @@ Parse the arguments to extract:
 
 Examples:
 
-- `/review-and-comment https://github.com/your-org/your-app/pull/1664`
-- `/review-and-comment https://github.com/your-org/your-app/pull/1664 quick`
+- `/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664`
+- `/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664 quick`
 - `/review-and-comment 1664` (legacy format, auto-detects repo)
 - `/review-and-comment 1664 FE 841` (legacy format with component)
 
@@ -320,7 +326,7 @@ fi
 
 # Detect workspace base directory
 WORKSPACE_BASE=""
-for base in "/Users/you/workspace" "$HOME/workspace" "$HOME/work" "$HOME/dev"; do
+for base in "/Users/lioartoil/workspace" "$HOME/workspace" "$HOME/work" "$HOME/dev"; do
   if [[ -d "$base" ]]; then
     WORKSPACE_BASE="$base"
     printf "   Found workspace base: %s\n" "$WORKSPACE_BASE"
@@ -590,7 +596,7 @@ if jq empty "$PR_DETAILS_FILE" 2>/dev/null; then
 
     # Extract JIRA tickets from PR body (supports multiple patterns)
     # Also try with different ticket prefixes and formats
-    EXTRACTED_TICKETS=$(echo "$PR_BODY" | grep -oE '(PROJ|FEAT|BUG|TASK)-[0-9]+' | sort -u | head -10)
+    EXTRACTED_TICKETS=$(echo "$PR_BODY" | grep -oE '(YIMX|YIMCHEF|CFW|AO|KAM|XC|XR|BUG|FEATURE)-[0-9]+' | sort -u | head -10)
 
     if [[ -n "$EXTRACTED_TICKETS" ]]; then
       ticket_count=$(echo "$EXTRACTED_TICKETS" | wc -l | tr -d ' ')
@@ -610,7 +616,7 @@ if jq empty "$PR_DETAILS_FILE" 2>/dev/null; then
       fi
     else
       printf "   ℹ️  No JIRA tickets found in PR description\n"
-      printf "   💡 Tip: Ensure tickets follow format like PROJ-123, PROJ-456, etc.\n"
+      printf "   💡 Tip: Ensure tickets follow format like YIMX-123, CFW-456, etc.\n"
     fi
   elif [[ -n "$TICKET" ]]; then
     printf "   ✅ Using provided JIRA ticket: %s\n" "$TICKET"
@@ -724,7 +730,7 @@ BUSINESS_CONTEXT:
 - Unresolved Discussions: [list]
 
 LOCAL_ANALYSIS:
-- Branch: [PR branch name, e.g., PROJ-985]
+- Branch: [PR branch name, e.g., YIMX-985]
 - Files Changed: [count by type: frontend/backend/config/test]
 - Local Paths: [full paths to changed files for tool access]
 - File Sizes: [detect large files that may need special attention]
@@ -2348,8 +2354,8 @@ Reviews are stored in `.reviews/{owner}/{repo}/` within your current directory:
 
 ```
 .reviews/
-├── your-org/
-│   └── your-app/
+├── centraldigital/
+│   └── cfw-sales-portal/
 │       ├── PR-1833-review.md
 │       ├── PR-1833-todos.md
 │       └── lessons-learned.md
@@ -2386,19 +2392,19 @@ This ensures business correctness by validating implementation against the compl
 
 ```bash
 # Using PR URL (recommended)
-/review-and-comment https://github.com/your-org/your-app/pull/1664
+/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664
 
 # Quick review mode (critical/high issues only)
-/review-and-comment https://github.com/your-org/your-app/pull/1664 quick
+/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664 quick
 
 # With component type override
-/review-and-comment https://github.com/your-org/your-app/pull/1664 BE
+/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664 BE
 
 # With JIRA ticket
-/review-and-comment https://github.com/your-org/your-app/pull/1664 FE PROJ-841
+/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664 FE YIMX-841
 
 # Quick mode with ticket
-/review-and-comment https://github.com/your-org/your-app/pull/1664 quick PROJ-841
+/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1664 quick YIMX-841
 
 # Legacy format (still supported, auto-detects repo)
 /review-and-comment 1664
@@ -2452,7 +2458,7 @@ This improved command provides comprehensive PR review with business focus, cont
 2. **Extract from file**: Read all fields from the saved JSON file using `jq`
 3. **Add verification**: Check PR_BODY status and re-extract if empty
 4. **Enhanced debugging**: Show PR body length and first line for troubleshooting
-5. **Expanded patterns**: Support more ticket prefixes (PROJ, BUG, FEATURE)
+5. **Expanded patterns**: Support more ticket prefixes (YIMCHEF, BUG, FEATURE)
 6. **Better error messages**: Guide users on expected ticket formats
 
 **Benefit**: Ensures JIRA tickets are reliably extracted regardless of shell context or variable scope issues.
@@ -2496,7 +2502,7 @@ gh pr view "https://github.com/${REPO}/pull/${PR_NUMBER}" --json ...
 
 **Solution**: Added comprehensive repository detection logic that:
 
-- Searches multiple common workspace patterns (`/Users/you/workspace`, `$HOME/workspace`, etc.)
+- Searches multiple common workspace patterns (`/Users/lioartoil/workspace`, `$HOME/workspace`, etc.)
 - Tries organization-based paths: `$WORKSPACE/$OWNER/$REPO_NAME`
 - Falls back to current directory traversal with remote URL validation
 - Automatically checks out the PR branch using `gh pr checkout`
@@ -2547,10 +2553,10 @@ To test these fixes work correctly:
 
 ```bash
 # Test with a real PR URL - should auto-detect and checkout correctly
-/review-and-comment https://github.com/your-org/your-app/pull/1843
+/review-and-comment https://github.com/centraldigital/cfw-sales-portal/pull/1843
 
 # Verify the command:
-# ✅ Finds correct repository at /Users/you/workspace/your-org/your-app
+# ✅ Finds correct repository at /Users/lioartoil/workspace/centraldigital/cfw-sales-portal
 # ✅ Checks out PR branch successfully
 # ✅ Posts comments without HTTP 422 errors
 # ✅ Falls back to general comments if inline fails

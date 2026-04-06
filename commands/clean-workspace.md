@@ -1,3 +1,8 @@
+---
+name: clean-workspace
+description: Use when cleaning up project clutter — temporary files, backups, build artifacts, abandoned worktrees. Identifies and removes irrelevant files safely.
+---
+
 # /clean-workspace
 
 A general-purpose command to identify and clean up irrelevant files in any project workspace, including temporary files, backups, and other clutter.
@@ -15,7 +20,7 @@ This command helps maintain a clean workspace by identifying and removing common
 ## What it does
 
 1. **Scans for Common Clutter**: Identifies typical temporary and backup files
-2. **Respects Version Control**: Checks git/svn/hg status before suggesting deletions
+2. **Respects Version Control**: Checks git/svn/hg status before suggesting deletions  
 3. **Project-Aware**: Recognizes common project patterns and build artifacts
 4. **Safe Cleanup**: Always asks for confirmation before removing files
 5. **Provides Summary**: Reports what was cleaned and space recovered
@@ -25,7 +30,6 @@ This command helps maintain a clean workspace by identifying and removing common
 Analyze the current workspace for irrelevant files that can be safely cleaned up. Follow these steps:
 
 1. **Identify Version Control System**:
-
    ```bash
    # Check for .git, .svn, .hg directories
    # Use appropriate commands (git status, svn status, etc.)
@@ -57,22 +61,18 @@ Analyze the current workspace for irrelevant files that can be safely cleaned up
    - `*.iml`, `.project`, `.classpath`
 
 3. **Analyze Each Category**:
-
    ```markdown
    ## Workspace Cleanup Analysis
 
    ### Temporary Files (X MB)
-
    - Safe to remove: [list files]
    - Check first: [list files that might be important]
 
    ### Build Artifacts (X MB)
-
    - Can rebuild: [list directories]
    - Might need: [list files to verify]
 
    ### Large Files Not in Version Control
-
    - [List files over 10MB not tracked]
    ```
 
@@ -82,26 +82,22 @@ Analyze the current workspace for irrelevant files that can be safely cleaned up
    - Similar names in same directory
 
 5. **Present Cleanup Plan**:
-
    ```markdown
    ## Cleanup Summary
 
    **Total Space to Recover**: X MB
 
    ### Safe to Delete (X files, X MB)
-
    - [ ] Temporary files: X files
-   - [ ] OS-generated files: X files
+   - [ ] OS-generated files: X files  
    - [ ] Editor backups: X files
 
    ### Requires Confirmation (X files, X MB)
-
    - [ ] Build artifacts (can be regenerated)
    - [ ] Large untracked files
    - [ ] Possible duplicates
 
    ### Recommendations
-
    - Add X patterns to .gitignore
    - Consider archiving X old files
    - Move X files to proper locations
@@ -149,7 +145,6 @@ Detect the operating system and use appropriate commands:
 Analyzed 1,234 files in current workspace.
 
 ### Cleanup Summary
-
 - **15 temporary files** (2.3 MB) - Editor backups and OS files
 - **3 build directories** (156 MB) - Can be regenerated
 - **8 duplicate files** (5.1 MB) - Copies and old versions
@@ -158,19 +153,16 @@ Analyzed 1,234 files in current workspace.
 **Total recoverable space: 252.4 MB**
 
 ### Safe to Delete Now
-
-✓ 15 editor backup files (_~, _.swp)
+✓ 15 editor backup files (*~, *.swp)
 ✓ 3 .DS_Store files
-✓ 5 \*.pyc files not in **pycache**
+✓ 5 *.pyc files not in __pycache__
 
-### Requires Your Confirmation
-
+### Requires Your Confirmation  
 ? /build directory (can run 'npm build' to regenerate)
 ? /old-backup-2024 directory (appears to be old backup)
 ? debug.log (89 MB, last modified 45 days ago)
 
 Would you like me to:
-
 1. Delete the safe files only
 2. Delete safe files and confirmed items
 3. Show more details about specific files

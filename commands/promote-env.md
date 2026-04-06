@@ -1,3 +1,10 @@
+---
+name: promote-env
+description: Use when promoting code between environments (develop → SIT → UAT → PROD). Executes the comprehensive environment promotion PR workflow.
+argument-hint: "[from-env] [to-env]"
+disable-model-invocation: true
+---
+
 # /promote-env
 
 Execute the comprehensive environment promotion pull request workflow.

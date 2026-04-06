@@ -1,3 +1,9 @@
+---
+name: skill-creator
+description: Use when creating a new Claude Code skill or command. Guides through type selection, structure, frontmatter, and testing.
+argument-hint: "<skill-purpose>"
+---
+
 # Skill Creator
 
 Guide the creation of a new Claude Code skill or command.
@@ -8,10 +14,10 @@ Skill purpose: $ARGUMENTS
 
 ## Skill vs Command Decision
 
-| Type        | Location                      | Invocation                | Best For                                       |
-| ----------- | ----------------------------- | ------------------------- | ---------------------------------------------- |
-| **Command** | `.claude/commands/*.md`       | `/command-name`           | User-triggered workflows, one-off tasks        |
-| **Skill**   | `~/.claude/skills/*/SKILL.md` | Auto-activated by context | Reference material, always-available knowledge |
+| Type | Location | Invocation | Best For |
+|------|----------|-----------|----------|
+| **Command** | `.claude/commands/*.md` | `/command-name` | User-triggered workflows, one-off tasks |
+| **Skill** | `~/.claude/skills/*/SKILL.md` | Auto-activated by context | Reference material, always-available knowledge |
 
 **Rule of thumb:** If the user needs to explicitly trigger it → Command. If it should always be available → Skill.
 
@@ -30,7 +36,7 @@ Add to SKILL.md frontmatter when needed to prevent false activation:
 ```yaml
 negative-triggers:
   - "don't review"
-  - 'skip review'
+  - "skip review"
 ```
 
 ---
@@ -58,7 +64,6 @@ Input: $ARGUMENTS
 ```
 
 ### Our Conventions
-
 - Use `$ARGUMENTS` for user input
 - Support options: `--dry-run`, `--debug`, etc.
 - Include a `---` separator between header and body
@@ -92,11 +97,11 @@ The essential reference material.
 
 ### Progressive Disclosure (3 Levels)
 
-| Level                | What                                  | When Loaded         | Size Target |
-| -------------------- | ------------------------------------- | ------------------- | ----------- |
-| 1. Metadata          | `name` + `description` in frontmatter | Always              | 1-2 lines   |
-| 2. SKILL.md body     | Core instructions                     | When skill triggers | < 500 lines |
-| 3. Bundled resources | `references/`, `scripts/`, `assets/`  | On demand           | Unlimited   |
+| Level | What | When Loaded | Size Target |
+|-------|------|-------------|-------------|
+| 1. Metadata | `name` + `description` in frontmatter | Always | 1-2 lines |
+| 2. SKILL.md body | Core instructions | When skill triggers | < 500 lines |
+| 3. Bundled resources | `references/`, `scripts/`, `assets/` | On demand | Unlimited |
 
 **Key:** SKILL.md body should be concise. Move detailed reference material to `references/` subdirectory.
 
@@ -118,10 +123,10 @@ The essential reference material.
 
 ## Scope Decision (Global vs Project)
 
-| Scope       | Location                                     | Use When                    |
-| ----------- | -------------------------------------------- | --------------------------- |
-| **Global**  | `~/.claude/commands/` or `~/.claude/skills/` | Useful across all projects  |
-| **Project** | `.claude/commands/` or `.claude/skills/`     | Specific to this repository |
+| Scope | Location | Use When |
+|-------|----------|----------|
+| **Global** | `~/.claude/commands/` or `~/.claude/skills/` | Useful across all projects |
+| **Project** | `.claude/commands/` or `.claude/skills/` | Specific to this repository |
 
 ---
 

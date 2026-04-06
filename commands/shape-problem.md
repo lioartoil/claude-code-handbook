@@ -1,3 +1,9 @@
+---
+name: shape-problem
+description: Use BEFORE proposing solutions. Transforms ambiguous requirements into structured, actionable problem definitions. Does NOT propose solutions.
+argument-hint: "<requirement-or-question>"
+---
+
 # Shape Problem
 
 Transform ambiguous requirements into structured, actionable problem definitions.
@@ -18,26 +24,26 @@ Input: $ARGUMENTS
 
 ## Phase 2: Define Constraints
 
-| Constraint Type | Description                                  | Source               | Negotiable? |
-| --------------- | -------------------------------------------- | -------------------- | ----------- |
-| Technical       | [e.g., must work with existing auth service] | [who stated/implied] | Yes/No      |
-| Timeline        | [e.g., needed by Sprint 26.3]                | [who stated]         | Yes/No      |
-| Resource        | [e.g., 2 BE engineers available]             | [team capacity]      | Yes/No      |
-| Compatibility   | [e.g., must not break existing BFFs]         | [inferred/stated]    | Yes/No      |
-| Dependencies    | [e.g., blocked by PR #88 merge]              | [technical analysis] | No          |
+| Constraint Type | Description | Source | Negotiable? |
+|-----------------|-------------|--------|-------------|
+| Technical | [e.g., must work with existing auth service] | [who stated/implied] | Yes/No |
+| Timeline | [e.g., needed by Sprint 26.3] | [who stated] | Yes/No |
+| Resource | [e.g., 2 BE engineers available] | [team capacity] | Yes/No |
+| Compatibility | [e.g., must not break existing BFFs] | [inferred/stated] | Yes/No |
+| Dependencies | [e.g., blocked by PR #88 merge] | [technical analysis] | No |
 
 ## Phase 3: Define Success
 
-| Criterion                         | Measurable Target                            | How to Verify                   |
-| --------------------------------- | -------------------------------------------- | ------------------------------- |
-| [e.g., Session expiry works]      | [e.g., cookie expires at session_expires_at] | [e.g., manual test + unit test] |
-| [e.g., No performance regression] | [e.g., p95 latency < 200ms]                  | [e.g., load test]               |
+| Criterion | Measurable Target | How to Verify |
+|-----------|-------------------|---------------|
+| [e.g., Session expiry works] | [e.g., cookie expires at session_expires_at] | [e.g., manual test + unit test] |
+| [e.g., No performance regression] | [e.g., p95 latency < 200ms] | [e.g., load test] |
 
 ## Phase 4: Risk Assessment
 
-| Risk                                    | Likelihood   | Impact       | Mitigation | Owner         |
-| --------------------------------------- | ------------ | ------------ | ---------- | ------------- |
-| [e.g., Breaking change to BFF contract] | High/Med/Low | High/Med/Low | [action]   | [person/team] |
+| Risk | Likelihood | Impact | Mitigation | Owner |
+|------|-----------|--------|------------|-------|
+| [e.g., Breaking change to BFF contract] | High/Med/Low | High/Med/Low | [action] | [person/team] |
 
 Rate each risk: **Critical** (High × High), **Significant** (High × Med or Med × High), **Moderate** (all others).
 

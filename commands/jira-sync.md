@@ -1,3 +1,9 @@
+---
+name: jira-sync
+description: Use when syncing JIRA ticket data into local docs for sprint planning. Creates structured user-stories/ files from JIRA issues.
+argument-hint: "<ticket-id-or-jql>"
+---
+
 # /jira-sync
 
 You are a technical project coordinator synchronizing JIRA ticket data into structured local documentation for sprint planning and team reference.
@@ -23,9 +29,9 @@ Sync JIRA tickets to local documentation structure.
 ## Examples
 
 ```
-/jira-sync PROJ-794                          # Single ticket
-/jira-sync PROJ sprint:3                     # All tickets in Sprint 3
-/jira-sync PROJ sprint:25.12                 # All tickets in Sprint 25.12
+/jira-sync YIMX-794                          # Single ticket
+/jira-sync YIMX sprint:3                     # All tickets in Sprint 3
+/jira-sync YIMX sprint:25.12                 # All tickets in Sprint 25.12
 /jira-sync PROJ jql:"assignee = currentUser()" # Custom query
 ```
 
@@ -33,26 +39,23 @@ Sync JIRA tickets to local documentation structure.
 
 ### 1. Parse Arguments
 
-- Single ticket: Direct ticket ID (e.g., PROJ-794)
+- Single ticket: Direct ticket ID (e.g., YIMX-794)
 - Sprint search: `<project> sprint:<number>`
 - JQL search: `<project> jql:<query>`
 
 ### 2. Fetch JIRA Data
 
 For single ticket:
-
 ```bash
 jira view <ticket-id> -t debug
 ```
 
 For sprint search:
-
 ```bash
 jira list --query 'project = <project> AND sprint = "<project> Sprint <number>"'
 ```
 
 For JQL search:
-
 ```bash
 jira list --query '<custom-jql>'
 ```
@@ -60,7 +63,6 @@ jira list --query '<custom-jql>'
 ### 3. Extract Key Information
 
 From debug output, extract:
-
 - **Core fields**: summary, description, status, priority, issuetype
 - **Dates**: created, updated, duedate
 - **People**: reporter, assignee
@@ -133,8 +135,7 @@ From debug output, extract:
 ### 7. Smart Updates
 
 If files exist:
-
-- Preserve sections marked with `<!-- CUSTOM -->`
+- Preserve sections marked with `<!-- CUSTOM -->` 
 - Update JIRA-sourced sections
 - Add new fields if found
 - Note last sync timestamp
@@ -142,7 +143,7 @@ If files exist:
 ### 8. Output Summary
 
 ```
-Synced: PROJ-794 ✓
+Synced: YIMX-794 ✓
   Created: README.md, requirements.md
   Updated: technical-design.md
   Preserved: custom-notes.md
@@ -151,7 +152,6 @@ Synced: PROJ-794 ✓
 ## Configuration Detection
 
 Check for project-specific patterns:
-
 - `.jira-sync.json` for field mappings
 - Existing directory structures
 - Project type indicators (user-stories/, docs/, etc.)
@@ -168,7 +168,6 @@ Check for project-specific patterns:
 ### Custom Field Mapping
 
 If `.jira-sync.json` exists:
-
 ```json
 {
   "fieldMappings": {
@@ -191,7 +190,6 @@ If `.jira-sync.json` exists:
 ### Auto-categorization
 
 Based on:
-
 - Issue type (Story, Bug, Task)
 - Labels (frontend, backend, etc.)
 - Component (UI, API, etc.)
