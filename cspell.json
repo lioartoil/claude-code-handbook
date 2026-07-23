@@ -4,6 +4,7 @@
   "language": "en",
   "words": [
     "agentic",
+    "argjson",
     "ASVS",
     "automations",
     "autoresearch",
@@ -87,6 +88,7 @@
     "vektra",
     "Vitest",
     "venv",
-    "worktree"
+    "worktree",
+    "worktrees"
   ]
 }

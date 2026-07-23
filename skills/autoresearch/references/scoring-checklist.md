@@ -1,6 +1,6 @@
-# Scoring Checklist — 6 Binary Items
+# Scoring Checklist — 7 Binary Items
 
-Score each item as PASS (1) or FAIL (0). Total score = sum of all items (0-6).
+Score each item as PASS (1) or FAIL (0). Total score = sum of all items (0-7).
 
 ## Pre-Scoring Setup
 
@@ -180,11 +180,87 @@ If no `REVIEW_COMPLETE:` line exists, score as FAIL (catastrophic output failure
 
 ---
 
+## Item 7: Findings Target High-Acceptance Categories
+
+**Evidence**: review-outcomes.jsonl shows certain categories are consistently ignored by authors
+
+**Scoring**:
+
+1. Read `~/.claude/state/autoresearch/outcome-targets.json`
+   - If file doesn't exist, score as PASS (no outcome data available — backward compatible)
+2. Extract `scoring_item7.weak_categories` array and `scoring_item7.threshold_pct`
+3. Extract all `DRY_RUN_COMMENT:` bodies from output
+4. Classify each finding into a category using keyword matching:
+   - `auth|injection|secret|XSS|CSRF|token|credential|permission` → `security`
+   - `N\+1|query|latency|performance|index|cache|slow|timeout|memory` → `performance`
+   - `bug|null|nil|panic|crash|infinite|race|logic|deadlock|overflow` → `logic`
+   - `naming|convention|style|format|lint|comment|typo|spelling|casing` → `style`
+   - Everything else → `maintainability`
+5. Count findings in weak categories
+6. PASS if weak-category findings < threshold_pct% of total. FAIL if >= threshold_pct%.
+
+```bash
+TARGETS_FILE="$HOME/.claude/state/autoresearch/outcome-targets.json"
+if [[ ! -f "$TARGETS_FILE" ]]; then
+  echo "PASS (no outcome targets — backward compatible)"
+  ITEM7=1
+else
+  WEAK_CATS=$(jq -r '.scoring_item7.weak_categories[]' "$TARGETS_FILE" 2>/dev/null)
+  THRESHOLD=$(jq -r '.scoring_item7.threshold_pct' "$TARGETS_FILE" 2>/dev/null || echo 30)
+
+  if [[ -z "$WEAK_CATS" ]]; then
+    echo "PASS (no weak categories identified)"
+    ITEM7=1
+  else
+    TOTAL_COMMENTS=$(grep -c "DRY_RUN_COMMENT:" output.txt || echo 0)
+    WEAK_COUNT=0
+
+    while IFS= read -r line; do
+      body=$(echo "$line" | sed 's/DRY_RUN_COMMENT: //' | jq -r '.body')
+      body_lower=$(echo "$body" | tr '[:upper:]' '[:lower:]')
+
+      category="maintainability"
+      if echo "$body_lower" | grep -qE 'auth|injection|secret|xss|csrf|token|credential|permission'; then
+        category="security"
+      elif echo "$body_lower" | grep -qE 'n\+1|query|latency|performance|index|cache|slow|timeout|memory'; then
+        category="performance"
+      elif echo "$body_lower" | grep -qE 'bug|null|nil|panic|crash|infinite|race|logic|deadlock|overflow'; then
+        category="logic"
+      elif echo "$body_lower" | grep -qE 'naming|convention|style|format|lint|comment|typo|spelling|casing'; then
+        category="style"
+      fi
+
+      if echo "$WEAK_CATS" | grep -q "$category"; then
+        WEAK_COUNT=$((WEAK_COUNT + 1))
+      fi
+    done < <(grep "DRY_RUN_COMMENT:" output.txt)
+
+    if [[ "$TOTAL_COMMENTS" -eq 0 ]]; then
+      echo "PASS (0 findings)"
+      ITEM7=1
+    else
+      WEAK_PCT=$((WEAK_COUNT * 100 / TOTAL_COMMENTS))
+      if [[ "$WEAK_PCT" -lt "$THRESHOLD" ]]; then
+        echo "PASS ($WEAK_COUNT/$TOTAL_COMMENTS = ${WEAK_PCT}% in weak categories, threshold ${THRESHOLD}%)"
+        ITEM7=1
+      else
+        echo "FAIL ($WEAK_COUNT/$TOTAL_COMMENTS = ${WEAK_PCT}% in weak categories, threshold ${THRESHOLD}%)"
+        ITEM7=0
+      fi
+    fi
+  fi
+fi
+```
+
+If no `DRY_RUN_COMMENT:` lines exist, score as PASS.
+
+---
+
 ## Score Aggregation
 
 ```bash
-SCORE=$((ITEM1 + ITEM2 + ITEM3 + ITEM4 + ITEM5 + ITEM6))
-echo "Score: $SCORE/6"
+SCORE=$((ITEM1 + ITEM2 + ITEM3 + ITEM4 + ITEM5 + ITEM6 + ITEM7))
+echo "Score: $SCORE/7"
 ```
 
 Write results to `scores.json` in the format:
@@ -198,10 +274,41 @@ Write results to `scores.json` in the format:
     "3_diff_only": false,
     "4_no_upstream_fp": true,
     "5_summary_length": true,
-    "6_correct_verdict": true
+    "6_correct_verdict": true,
+    "7_high_acceptance": true
   },
   "details": {
     "3_diff_only": "1 comment on handler.go:15 not in diff"
+  },
+  "traces": {
+    "3_diff_only": {
+      "checked": ["handler.go:15", "service.go:42"],
+      "passed": ["service.go:42"],
+      "failed": ["handler.go:15"],
+      "reasoning": "handler.go:15 is in unchanged section, comment targets pre-existing code"
+    }
   }
 }
 ```
+
+### Trace Logging Rules
+
+For **every** checklist item (not just failures), populate the `traces` field:
+
+- **`checked`**: All inputs examined (comment paths, body text excerpts, char counts, etc.)
+- **`passed`**: Inputs that passed the check
+- **`failed`**: Inputs that failed the check (empty array if PASS)
+- **`reasoning`**: One-sentence explanation of *why* it passed or failed — not just *that* it did
+
+**Why traces matter**: When the optimization loop (Step 3a) only sees binary pass/fail, it cannot diagnose root causes. Traces give the meta-agent the failure trajectory needed to make targeted fixes. Without them, improvement rate drops significantly (per AutoAgent research: scores-only optimization performs 40-60% worse than trace-informed optimization).
+
+**Per-item trace examples**:
+
+| Item                | `checked` contains                                          | `reasoning` example                                              |
+| ------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
+| 1 (duplicates)      | Comment pairs compared, keyword overlap %                    | "auth.go had 2 comments with 65% keyword overlap on validation" |
+| 2 (suggested fix)   | Each comment body's fix/code presence                          | "3/4 comments had fixes; service.go:88 missing code block"      |
+| 3 (diff only)       | Each path:line vs diff hunk ranges                             | "handler.go:15 is outside hunk range 20-45"                      |
+| 4 (upstream FP)     | Comments matching "missing X" pattern, upstream refs found     | "flagged missing auth but body references BFF middleware"       |
+| 5 (summary length)  | Char count, follow-up detection result                        | "2,847 chars, first review, under 3,000 limit"                   |
+| 6 (verdict)         | Critical/High counts, expected vs actual event                | "Critical:0 High:2 → expected COMMENT, got COMMENT"              |
