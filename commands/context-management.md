@@ -1,6 +1,6 @@
 ---
 name: context-management
-description: Use during long sessions when the context window fills up. Manages token budget, suggests compaction, identifies what to drop.
+description: Use when a long session's context is filling up or /compact has failed — assesses session signals, recommends compact/clear/continue, and drafts a preservation string.
 ---
 
 # Context Management
