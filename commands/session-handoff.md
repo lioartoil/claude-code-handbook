@@ -1,6 +1,6 @@
 ---
 name: session-handoff
-description: Use at the end of a session to capture context for the next session. Generates session handoff document with state, decisions, and next steps.
+description: Use when ending a session to capture work context for the next one: writes current state to docs/HANDOFF.md, appends a bullet to docs/session-history.md, then commits + pushes per org strategy.
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: shape-problem
-description: Use BEFORE proposing solutions. Transforms ambiguous requirements into structured, actionable problem definitions. Does NOT propose solutions.
+description: Use when requirements are ambiguous or scope isn't clear—structures the problem through constraints, success criteria, and risk assessment before exploring solutions.
 argument-hint: "<requirement-or-question>"
 ---
 

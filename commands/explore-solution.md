@@ -1,6 +1,6 @@
 ---
 name: explore-solution
-description: Use BEFORE committing to an implementation approach. Generates and compares 2-3 solution candidates with trade-offs.
+description: Use when facing technical decisions with real trade-offs and multiple viable approaches. Compares 2-3 solutions across complexity, risk, effort, and team familiarity to inform—not decide.
 ---
 
 # Explore Solution
